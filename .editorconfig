@@ -1,0 +1,8 @@
+root = true
+
+[*]
+indent_size = tab
+tab_width = 2
+insert_final_newline = false
+ij_any_spaces_within_braces =  true
+ij_any_spaces_within_brackets =  true

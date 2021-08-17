@@ -1,0 +1,28 @@
+repositories:
+  - name: bitnami
+    url: https://charts.bitnami.com/bitnami
+  - name: bndigital
+    url: https://dcr.bndigital.dev/chartrepo/library
+    
+helmDefaults:
+  createNamespace: true
+  cleanupOnFail: true
+  kubeContext: do-fra1-bndigital
+  
+environments:
+  staging:
+    values: [ ]
+
+releases:
+  - name: app-website
+    namespace: '{{ .Environment.Name }}'
+    chart: packages/website
+    labels:
+      app: website
+
+  - name: app-cms
+    namespace: '{{ .Environment.Name }}'
+    chart: packages/cms
+    labels:
+      app: cms
+

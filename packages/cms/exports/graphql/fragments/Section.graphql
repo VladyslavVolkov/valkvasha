@@ -1,0 +1,12 @@
+fragment Section on CmsSection {
+  id
+  title
+  description
+  slug
+  cards {
+    ...Card
+  }
+  records {
+    ...Record
+  }
+}
