@@ -1,20 +1,11 @@
 import { FC } from 'react'
-import { Layout, Typography } from 'antd'
-import { useContent } from '../../components/app/Content'
+import { Layout } from 'antd'
+import { useOutletContext } from 'react-router-dom'
+import { HeroSection } from 'src/components/section'
 
-const Home: FC = ({ children }) => {
-  const section = useContent('/#hero')
-  return (
-    <Layout>
-      {section && (
-        <Layout.Content>
-          <Typography.Title>{section.title}</Typography.Title>
-          <Typography.Paragraph>{section.description}</Typography.Paragraph>
-        </Layout.Content>
-      )}
-      <Layout.Content>{children}</Layout.Content>
-    </Layout>
-  )
+const Home: FC = () => {
+  const props = useOutletContext<HomeFragment>()
+  return <Layout.Content>{props && <HeroSection {...props.hero} />}</Layout.Content>
 }
 
-export default Home
+export { Home as default }

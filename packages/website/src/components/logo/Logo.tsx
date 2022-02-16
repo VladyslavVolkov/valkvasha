@@ -1,14 +1,14 @@
-import { FC, Fragment, ImgHTMLAttributes } from 'react'
+import { VFC } from 'react'
 import { Link } from 'react-router-dom'
+import { SvgIcon } from '../icon'
+import { Space } from 'antd'
 
-type LogoProps = { image: ImgHTMLAttributes<HTMLImageElement>; name: string }
-
-const Logo: FC<Partial<LogoProps>> = ({ image }) => (
-  <Fragment>
-    <Link to={'/'}>
-      <img height={32} style={{ marginTop: -4 }} alt={image?.title} {...image} />
-    </Link>
-  </Fragment>
+const Logo: VFC = () => (
+  <Link to={'/'}>
+    <Space direction={'horizontal'}>
+      <SvgIcon fill={'#2F2E8B'} type={'strapi'} />
+    </Space>
+  </Link>
 )
 
 export { Logo }

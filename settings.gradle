@@ -1,0 +1,6 @@
+rootProject.name = rootDir.name
+
+file('packages').eachDir { dir ->
+  include dir.name
+  project(":${dir.name}").projectDir = dir
+}

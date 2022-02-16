@@ -1,17 +1,17 @@
 import { VFC } from 'react'
 import { Menu } from 'antd'
 import { NavLink } from 'react-router-dom'
-import { LinkFragment, Maybe } from '../../graphql'
+import './Navigation.less'
 
-type NavigationProps = { links: Maybe<LinkFragment>[] }
+type NavigationProps = { data: LinkFragment[] }
 
-const Navigation: VFC<Partial<NavigationProps>> = ({ links = [] }) => (
-  <Menu style={{ borderBottom: 0 }} theme={'light'} mode='horizontal'>
-    {links?.map(
+const Navigation: VFC<NavigationProps> = ({ data }) => (
+  <Menu theme={'light'} mode={'horizontal'}>
+    {data?.map(
       it =>
-        it && (
-          <Menu.Item key={it.url}>
-            <NavLink to={it.url}>{it.text}</NavLink>
+        it?.url && (
+          <Menu.Item key={it?.url}>
+            <NavLink to={it.url}>{it.title}</NavLink>
           </Menu.Item>
         ),
     )}

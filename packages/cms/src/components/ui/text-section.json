@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_ui_text_sections",
+  "info": {
+    "displayName": "Text Section",
+    "icon": "align-center"
+  },
+  "options": {},
+  "attributes": {
+    "header1": {
+      "type": "string"
+    },
+    "text1": {
+      "type": "text"
+    },
+    "header2": {
+      "type": "string"
+    },
+    "text2": {
+      "type": "text"
+    }
+  }
+}

@@ -1,20 +1,10 @@
 # syntax = docker/dockerfile:latest
-FROM dcr.bndigital.dev/library/nodejs:latest AS build
-WORKDIR /runner
-COPY package.json .
+FROM dcr.bndigital.dev/library/yarn:1.3.0 AS build
 RUN yarn
 COPY . .
 RUN yarn build
 
-FROM dcr.bndigital.dev/library/http:latest
-ENV STRAPI_TELEMETRY_DISABLED=true \
-    STRAPI_LOG_LEVEL=warn \
-    STRAPI_HIDE_STARTUP_MESSAGE=true \
-    STRAPI_DISABLE_EE=true \
-    STRAPI_DISABLE_UPDATE_NOTIFICATION=true \
-    STRAPI_SHOW_TUTORIALS=false \
-    NODE_ENV=production
-WORKDIR /usr/local/src
-COPY --from=build /runner .
+FROM dcr.bndigital.dev/library/nodejs:1.3.0
+COPY --chown=node --from=build /usr/local/src .
 ENTRYPOINT ["yarn"]
-CMD ["start"]
+CMD ["strapi", "start"]

@@ -1,4 +1,2 @@
-import { DefaultLayout } from './DefaultLayout'
-import './index.less'
-
-export { DefaultLayout as default }
+export { DefaultLayout } from './DefaultLayout'
+export { Content } from './Content'

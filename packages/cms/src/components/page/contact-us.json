@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_page_contact_uses",
+  "info": {
+    "displayName": "Contact Us",
+    "icon": "user-edit",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "pathname": {
+      "type": "string",
+      "required": true
+    },
+    "contact": {
+      "type": "component",
+      "repeatable": false,
+      "component": "ui.contact"
+    }
+  }
+}

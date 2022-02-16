@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_page_abouts",
+  "info": {
+    "displayName": "About",
+    "icon": "user-circle",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "pathname": {
+      "type": "string",
+      "default": "/about",
+      "required": true
+    },
+    "education": {
+      "type": "component",
+      "repeatable": false,
+      "component": "data.entry"
+    },
+    "courses": {
+      "type": "component",
+      "repeatable": true,
+      "component": "data.set"
+    },
+    "quote": {
+      "type": "text"
+    }
+  }
+}

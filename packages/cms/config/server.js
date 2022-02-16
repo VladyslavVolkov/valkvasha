@@ -1,10 +1,14 @@
+const tasks = require('./cron')
+
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
-  admin: {
-    autoOpen: env('NODE_ENV') !== 'production',
-    auth: {
-      secret: env('ADMIN_JWT_SECRET', '5407c1bac164e7d73e1a9b6ff06882ba'),
-    },
+  admin: { autoOpen: false },
+  cron: {
+    enabled: true,
+    tasks,
+  },
+  app: {
+    keys: env.array('SESSION_KEY', ['c8daa387-fd1a-495f-ab66-285f37cc5c8a']),
   },
 })

@@ -1,57 +1,51 @@
+const path = require('path')
 const name = require('./name')
+const Client = require('knex/lib/dialects/postgres')
+const Formatter = require('knex/lib/formatter')
 
-const sqlite = {
-  connector: 'bookshelf',
-  settings: {
-    client: 'sqlite',
-    filename: process.env.DATABASE_FILE ?? `data/db/${name}.db`,
-  },
-  options: {
-    useNullAsDefault: true,
-  },
+/**
+ * Overrides default Strapi + Knex ORM field name strategy, enforcing snake_case instead of direct property name mapping
+ * @param value
+ * @returns {string|*}
+ */
+Client.prototype.wrapIdentifier = value => {
+  if (value === '*') return value
+  const matched = value.match(/(.*?)(\[[0-9]\])/)
+  if (matched) return Client.prototype.wrapIdentifier.wrapIdentifier(matched[1]) + matched[2]
+  return `"${value.replace(/([A-Z])/g, (_, s) => `_${s.toLowerCase()}`).replace(/"/g, '""')}"`
 }
 
-const postgres = {
-  connector: 'bookshelf',
-  settings: {
-    client: 'postgres',
-    database: process.env.DATABASE_NAME ?? name,
-    schema: process.env.DATABASE_SCHEMA ?? 'public',
-    username: process.env.DATABASE_USERNAME ?? name,
-    password: process.env.DATABASE_PASSWORD ?? '',
-    port: process.env.DATABASE_PORT ?? 5432,
-    host: process.env.DATABASE_HOST ?? 'postgresql',
-  },
-  options: {
-    useNullAsDefault: true,
-  },
-}
+Formatter.prototype.wrapAsIdentifier = value => `"${(value || '').replace(/"/g, '""')}"`
 
-const mysql = {
-  connector: 'bookshelf',
-  settings: {
-    client: 'mysql',
-    database: process.env.DATABASE_NAME ?? name,
-    username: process.env.DATABASE_USERNAME ?? name,
-    password: process.env.DATABASE_PASSWORD ?? '',
-    port: process.env.DATABASE_PORT ?? 3306,
-    host: process.env.DATABASE_HOST ?? 'mysql',
-  },
-  options: {
-    useNullAsDefault: true,
-  },
-}
-
-const db = {
-  mysql,
-  sqlite,
-  postgres,
-}
-
-module.exports = {
-  defaultConnection: 'default',
-  connections: {
-    default: process.env.DATABASE_CLIENT ? db[process.env.DATABASE_CLIENT] || db.sqlite : db.sqlite,
-    sqlite,
-  },
+/**
+ *
+ * @param {(key: string, defaultValue?: string)=> string} env
+ * @returns {{connection: import("knex").Knex.Config}}
+ */
+module.exports = ({ env }) => {
+  const client = env('DATABASE_CLIENT', 'sqlite')
+  return {
+    connection: {
+      client,
+      connection:
+        client !== 'sqlite'
+          ? {
+              version: '14',
+              charset: 'utf-8',
+              decimalNumbers: true,
+              parseJSON: true,
+              supportBigNumbers: true,
+              user: env('DATABASE_USERNAME', 'postgres'),
+              password: env('DATABASE_PASSWORD', ''),
+              database: env('DATABASE_NAME', name),
+              schema: env('DATABASE_SCHEMA', 'public'),
+              host: env('DATABASE_HOST', 'postgresql'),
+              port: Number.parseInt(env('DATABASE_PORT', '5432')),
+            }
+          : {
+              filename: path.join(__dirname, '..', env('DATABASE_FILENAME', '.tmp/data.db')),
+            },
+      useNullAsDefault: true,
+    },
+  }
 }

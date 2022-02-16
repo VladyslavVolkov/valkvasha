@@ -1,13 +1,6 @@
+/node_modules
+/build
+/Dockerfile
+/.dockerignore
 *.iml
-*ignore
-.DS_Store
-.cache
-.env*
-.eslintcache
-.git*
-.tmp
-Dockerfile
-build
-sonar-project.properties
-node_modules
 *.md

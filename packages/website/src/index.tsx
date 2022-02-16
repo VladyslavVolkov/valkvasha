@@ -1,34 +1,8 @@
-import { hydrate } from 'react-dom'
-import reportWebVitals from './reportWebVitals'
-import { init } from '@sentry/react'
-import { StrictMode, FC } from 'react'
-import { ApiProvider, RoutingProvider, ViewProvider, MetaProvider } from './components/app'
-import { routeMap } from './pages'
+import { renderApp } from '@bn-digital/react'
+import { initMarker, initSentry, reportWebVitals } from '@bn-digital/sdk'
+import { App } from 'src/components/app'
 
-const dsn = process.env.REACT_APP_SENTRY_DSN ?? undefined
-dsn &&
-  init({
-    enabled: process.env.NODE_ENV === 'production',
-    dsn: process.env.REACT_APP_SENTRY_DSN,
-  })
-
-const App: FC = ({ children }) => (
-  <StrictMode>
-    <ApiProvider>
-      <MetaProvider>
-        <ViewProvider>
-          <RoutingProvider routeMap={routeMap}>{children}</RoutingProvider>
-        </ViewProvider>
-      </MetaProvider>
-    </ApiProvider>
-  </StrictMode>
-)
-
-const element = <App />
-const container = window.document.getElementById('root')
-if (container) {
-  hydrate(element, container)
-  reportWebVitals()
-} else {
-  console.error('Failed to find root element <div id="root"></div> in DOM tree.')
-}
+await initMarker({ enabled: import.meta.env.PROD, destination: import.meta.env.WEBSITE_MARKER_ID })
+initSentry({ enabled: import.meta.env.PROD, dsn: import.meta.env.WEBSITE_SENTRY_DSN })
+renderApp(App, { strict: false })
+reportWebVitals()

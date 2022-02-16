@@ -1,18 +1,17 @@
 {
-  "name": "CMS",
-  "schemaPath": "./packages/cms/exports/graphql/schema.graphql",
+  "name": "CMS GraphQL API",
+  "schemaPath": "./packages/cms/src/graphql/schema.graphqls",
   "includes": [
-    "./packages/cms/exports/graphql/queries/*.graphql",
-    "./packages/cms/exports/graphql/mutations/*.graphql",
-    "./packages/cms/exports/graphql/fragments/*.graphql",
-    "./packages/website/src/graphql/queries/*.graphql",
-    "./packages/website/src/graphql/mutations/*.graphql",
-    "./packages/website/src/graphql/fragments/*.graphql"
+    "./packages/cms/src/graphql/**/*.graphql",
+    "./packages/website/src/graphql/**/*.graphql"
   ],
   "extensions": {
     "endpoints": {
-      "strapi": {
-        "url": "http://localhost:1337/graphql"
+      "development": {
+        "url": "http://localhost:1337/graphql",
+        "headers": {
+          "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ0OTc2MTQ0LCJleHAiOjE2NDc1NjgxNDR9.fQrH68k0SS0Nl8hLwdsVfKCqKLe9ttgZROZzsvZSb98"
+        }
       }
     }
   }

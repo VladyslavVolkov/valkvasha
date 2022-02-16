@@ -1,33 +1,59 @@
-import { VFC } from 'react'
-import { Col, Layout, Row, Skeleton } from 'antd'
-import { Logo } from '../logo/Logo'
-import { Navigation } from '../menu/Navigation'
-import { WebsiteComponent } from '../../graphql'
-import { Outlet } from 'react-router-dom'
+import { Drawer, Layout, Skeleton, Spin } from 'antd'
+import { Outlet } from 'react-router'
+import { Suspense, useCallback, useEffect, useState, VFC } from 'react'
+import { useLocation } from 'react-router-dom'
+import { AppContext } from 'src/components/app'
+import { WebsiteComponent } from 'src/graphql'
+import { Footer } from './Footer'
+import { Content } from './Content'
+import { Header } from './Header'
+import './DefaultLayout.less'
 
-const DefaultLayout: VFC = () => (
-  <Layout style={{ minHeight: '100vh', width: '100%' }}>
-    <WebsiteComponent variables={{ slug: window.location.hostname }}>
-      {({ data, loading }) => (
-        <Skeleton title={false} paragraph={false} avatar={false} loading={loading}>
-          <Layout.Header>
-            <Row align={'bottom'} wrap={false}>
-              <Col>
-                <Logo image={{ src: data?.website?.logo?.url, title: data?.website?.name ?? '' }} />
-              </Col>
-              <Col flex={'auto'}>
-                <Navigation links={data?.website?.menu?.find(it => it?.slug === 'default')?.links ?? []} />
-              </Col>
-            </Row>
-          </Layout.Header>
-          <Layout.Content style={{ padding: 50 }}>
-            <Outlet />
-          </Layout.Content>
-          <Layout.Footer style={{ textAlign: 'center' }}>App ©{new Date().getFullYear()}</Layout.Footer>
-        </Skeleton>
-      )}
-    </WebsiteComponent>
-  </Layout>
+const PageLoader: VFC = () => (
+  <Content>
+    <Spin size={'small'} />
+  </Content>
 )
+
+type ContentProps = ComponentPageContactUs | ComponentPageHome
+
+const DefaultLayout: VFC = () => {
+  const { pathname } = useLocation()
+
+  function filterByPathname<T extends ContentProps>(data: T[] = []): T | null {
+    return data.find(it => it?.pathname === pathname) ?? null
+  }
+
+  return (
+    <AppContext.Consumer>
+      {({ burger: { opened, toggle } }) => (
+        <Layout>
+          <WebsiteComponent>
+            {({ data }) => (
+              <>
+                <Layout.Header>
+                  <Content>
+                    <Header />
+                  </Content>
+                </Layout.Header>
+                <Layout.Content>
+                  <Suspense fallback={<PageLoader />}>
+                    <Outlet context={filterByPathname(data?.website?.data?.attributes?.content as ContentProps[])} />
+                  </Suspense>
+                </Layout.Content>
+                <Layout.Footer>
+                  <Content>
+                    <Footer />
+                  </Content>
+                </Layout.Footer>
+              </>
+            )}
+          </WebsiteComponent>
+          <Drawer width={'50%'} height={'100%'} onClose={toggle} visible={opened} />
+        </Layout>
+      )}
+    </AppContext.Consumer>
+  )
+}
 
 export { DefaultLayout }

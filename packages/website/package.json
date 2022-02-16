@@ -1,36 +1,34 @@
 {
-  "name": "@template/website",
+  "name": "@valkvasha/website",
   "private": true,
   "scripts": {
-    "build": "webpack --mode=production",
-    "start": "webpack serve --mode=development"
+    "vite": "node_modules/.bin/vite",
+    "env": "yarn vault-env",
+    "build": "yarn vite build",
+    "start": "yarn vite serve"
   },
+  "proxy": "http://localhost:1337",
   "dependencies": {
-    "@apollo/client": "^3.4.7",
-    "@bn-digital/webpack": "^1.8.15-7.11",
-    "@sentry/react": "^6.11.0",
-    "@sentry/tracing": "^6.11.0",
-    "antd": "^4.16.11",
-    "graphql": "^15.5.1",
-    "history": "^5.0.1",
+    "@bn-digital/antd": "^1.1.2",
+    "@bn-digital/graphql-client": "^1.1.45",
+    "@bn-digital/react": "^1.2.0",
+    "@bn-digital/react-i18n": "^1.0.1",
+    "antd": "^4.18.7",
+    "classnames": "^2.3.1",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-ga": "^3.3.0",
-    "react-helmet-async": "^1.0.9",
-    "react-intl": "^5.20.8",
-    "react-markdown": "^7.0.0",
-    "react-responsive": "^9.0.0-beta.3",
-    "react-router": "^6.0.0-beta.1",
-    "react-router-dom": "^6.0.0-beta.1",
-    "web-vitals": "^2.1.0"
+    "react-helmet": "^6.1.0",
+    "react-helmet-async": "^1.2.2",
+    "react-markdown": "^8.0.0",
+    "react-router-dom": "^6.2.1",
+    "react-use": "^17.3.2"
   },
   "devDependencies": {
-    "@types/node": "^16.6.1",
-    "@types/react": "^17.0.18",
-    "@types/react-dom": "^17.0.9",
-    "postcss": "^8.3.6",
-    "postcss-loader": "^6.1.1",
-    "typescript": "^4.3.5",
-    "webpack": "^5.50.0"
+    "@bn-digital/sdk": "^1.2.2",
+    "@bn-digital/vault-env": "^1.4.0",
+    "@bn-digital/vite": "^1.6.1",
+    "@types/classnames": "^2.3.1",
+    "@types/react": "^17.0.39",
+    "@types/react-helmet": "^6.1.5",
+    "typescript": "^4.5.5"
   }
 }

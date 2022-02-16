@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalDependencies">
+    <plugin id="Docker" />
+    <plugin id="Git4Idea" />
+    <plugin id="JavaScript" />
+    <plugin id="NodeJS" />
+    <plugin id="com.intellij.gradle" />
+    <plugin id="com.intellij.kubernetes" />
+    <plugin id="com.intellij.lang.jsgraphql" />
+    <plugin id="intellij.prettierJS" />
+    <plugin id="mobi.hsz.idea.gitignore" />
+    <plugin id="org.jetbrains.plugins.github" />
+    <plugin id="org.jetbrains.plugins.less" />
+    <plugin id="org.jetbrains.plugins.yaml" />
+    <plugin id="ru.adelf.idea.dotenv" />
+  </component>
+</project>
