@@ -231,6 +231,8 @@ type ComponentPageAbout {
   education: ComponentDataEntry
   courses(filters: ComponentDataSetFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentDataSet]
   quote: String
+  diplomas(filters: ComponentUiCardFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentUiCard]
+  about: String
 }
 
 type ComponentPageContactUs {
