@@ -1,5 +1,0 @@
-mutation login($input: UsersPermissionsLoginInput!) {
-  login(input: $input) {
-    jwt
-  }
-}

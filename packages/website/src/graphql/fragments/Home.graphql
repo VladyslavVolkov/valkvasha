@@ -1,15 +1,22 @@
 fragment Home on ComponentPageHome {
   id
   pathname
-  hero {
-    subtitle
-    id
-    description
-    title
-    media {
-      data {
-        ...File
-      }
-    }
+  section1 {
+    ...Card
+  }
+  section2 {
+    ...Headline
+  }
+  section3 {
+    ...Card
+  }
+  section4 {
+    ...Headline
+  }
+  section5 {
+    ...Headline
+  }
+  section6 {
+    ...Headline
   }
 }

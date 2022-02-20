@@ -1,0 +1,19 @@
+fragment About on ComponentPageAbout {
+  id
+  about
+  diplomas {
+    id
+    title
+    subtitle
+    description
+    media {
+      data {
+        ...File
+      }
+    }
+  }
+  quote
+  education {
+    ...Entry
+  }
+}

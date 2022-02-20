@@ -1,14 +1,23 @@
-import { Col, Row, Typography } from 'antd'
+import { FacebookFilled, InstagramFilled } from '@ant-design/icons'
+import { Col, List, Row } from 'antd'
 import { FC } from 'react'
-import { Link } from 'react-router-dom'
 
 const Footer: FC = () => (
   <Row justify={'space-between'}>
+    <Col></Col>
     <Col>
-      <Link to={'/'}>{window.location.hostname}</Link>
-    </Col>
-    <Col>
-      <Typography.Text>All rights reserved © {new Date().getFullYear()}</Typography.Text>
+      <List
+        grid={{ column: 2 }}
+        itemLayout={'horizontal'}
+        split={false}
+        size={'default'}
+        dataSource={[InstagramFilled, FacebookFilled]}
+        renderItem={Icon => (
+          <List.Item>
+            <Icon width={32} size={32} />
+          </List.Item>
+        )}
+      ></List>
     </Col>
   </Row>
 )

@@ -1,10 +1,13 @@
+import { Layout } from 'antd'
 import { FC } from 'react'
 import { Helmet } from 'react-helmet'
+import { useParams } from 'react-router-dom'
 
-const Page: FC<{ seo: Maybe<SeoFragment> | undefined }> = ({ seo }) => {
+const Page: FC = props => {
   return (
     <>
-      <Helmet title={seo?.metaTitle} />
+      <Helmet />
+      <Layout.Content style={{ padding: '40px 0' }}>{props.children}</Layout.Content>
     </>
   )
 }

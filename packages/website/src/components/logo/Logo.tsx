@@ -1,13 +1,10 @@
 import { VFC } from 'react'
 import { Link } from 'react-router-dom'
-import { SvgIcon } from '../icon'
-import { Space } from 'antd'
+import src from './logo.png'
 
 const Logo: VFC = () => (
   <Link to={'/'}>
-    <Space direction={'horizontal'}>
-      <SvgIcon fill={'#2F2E8B'} type={'strapi'} />
-    </Space>
+    <img src={src} alt={''} />
   </Link>
 )
 

@@ -1,0 +1,10 @@
+query posts($locale: I18NLocaleCode, $pagination: PaginationArg, $sort: [String], $filters: PostFiltersInput) {
+  posts(locale: $locale, pagination: $pagination, sort: $sort, filters: $filters) {
+    data {
+      id
+      attributes {
+        ...Post
+      }
+    }
+  }
+}

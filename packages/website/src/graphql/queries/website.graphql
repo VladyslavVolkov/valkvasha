@@ -1,5 +1,5 @@
-query website {
-  website {
+query website($locale: I18NLocaleCode = "ru") {
+  website(locale: $locale) {
     data {
       id
       attributes {

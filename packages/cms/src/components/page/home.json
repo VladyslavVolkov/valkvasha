@@ -20,8 +20,8 @@
     "section2": {
       "displayName": "Text Section",
       "type": "component",
-      "repeatable": false,
-      "component": "ui.text-section"
+      "repeatable": true,
+      "component": "ui.headline"
     },
     "section3": {
       "type": "component",
@@ -30,13 +30,18 @@
     },
     "section4": {
       "type": "component",
-      "repeatable": true,
-      "component": "ui.card"
+      "repeatable": false,
+      "component": "ui.headline"
     },
     "section5": {
       "type": "component",
       "repeatable": true,
-      "component": "ui.card"
+      "component": "ui.headline"
+    },
+    "section6": {
+      "type": "component",
+      "repeatable": false,
+      "component": "ui.headline"
     }
   }
 }

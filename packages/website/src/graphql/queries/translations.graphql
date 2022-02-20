@@ -1,0 +1,12 @@
+query translations($locale: I18NLocaleCode = "ru") {
+  translation(locale: $locale) {
+    data {
+      id
+      attributes {
+        entry {
+          ...Entry
+        }
+      }
+    }
+  }
+}

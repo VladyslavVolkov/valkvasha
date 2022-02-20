@@ -17,11 +17,6 @@
       "repeatable": false,
       "component": "data.entry"
     },
-    "courses": {
-      "type": "component",
-      "repeatable": true,
-      "component": "data.set"
-    },
     "quote": {
       "type": "text"
     },
@@ -32,6 +27,14 @@
     },
     "about": {
       "type": "text"
+    },
+    "photo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
     }
   }
 }

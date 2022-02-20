@@ -36,12 +36,6 @@
       "targetField": "name",
       "required": false
     },
-    "tags": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::tag.tag",
-      "inversedBy": "posts"
-    },
     "teaser": {
       "pluginOptions": {
         "i18n": {

@@ -1,9 +1,9 @@
 const defaultAdminData = {
-  username: process.env.ADMIN_USERNAME || 'dev@bndigital.co',
+  username: process.env.ADMIN_USERNAME || 'admin@valkvasha.com',
   password: process.env.ADMIN_PASSWORD || 'BNd1g1t@l',
-  firstname: process.env.ADMIN_FIRSTNAME || 'BN',
-  lastname: process.env.ADMIN_LASTNAME || 'Digital',
-  email: process.env.ADMIN_EMAIL || 'dev@bndigital.co',
+  firstname: process.env.ADMIN_FIRSTNAME || 'Admin',
+  lastname: process.env.ADMIN_LASTNAME || '',
+  email: process.env.ADMIN_EMAIL || 'admin@valkvasha.com',
   blocked: false,
   isActive: true,
 }

@@ -1,0 +1,10 @@
+query service($id: ID!) {
+  service(id: $id) {
+    data {
+      id
+      attributes {
+        ...Service
+      }
+    }
+  }
+}

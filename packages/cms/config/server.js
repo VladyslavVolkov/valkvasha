@@ -5,10 +5,7 @@ module.exports = ({ env }) => ({
   port: env.int('PORT', 1337),
   admin: { autoOpen: false },
   cron: {
-    enabled: true,
+    enabled: false,
     tasks,
-  },
-  app: {
-    keys: env.array('SESSION_KEY', ['c8daa387-fd1a-495f-ab66-285f37cc5c8a']),
   },
 })

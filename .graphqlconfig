@@ -10,7 +10,7 @@
       "development": {
         "url": "http://localhost:1337/graphql",
         "headers": {
-          "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ0OTc2MTQ0LCJleHAiOjE2NDc1NjgxNDR9.fQrH68k0SS0Nl8hLwdsVfKCqKLe9ttgZROZzsvZSb98"
+          "Authorization": "Bearer 7e858155bc148d1a1fde0b6da05f223ed63f4592c2d2e23c923fb123de448c18a94eed9efce1f1017bd56ffba60a409cea5211e71437b186f0bb948234fa03fdc00b5db22cf852e031d107d66190fa8ff0aa08ccada735b6c02b97adff95f7a6a0a0807c194243a12b705816a0381e5237df039cad04e7d1f73f1536d0d4e1a4"
         }
       }
     }

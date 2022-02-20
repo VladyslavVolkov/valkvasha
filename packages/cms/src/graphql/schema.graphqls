@@ -213,13 +213,6 @@ type ComponentDataEntry {
   value: String!
 }
 
-input ComponentDataSetFiltersInput {
-  value: StringFilterInput
-  and: [ComponentDataSetFiltersInput]
-  or: [ComponentDataSetFiltersInput]
-  not: ComponentDataSetFiltersInput
-}
-
 type ComponentDataSet {
   id: ID!
   value: String!
@@ -229,10 +222,10 @@ type ComponentPageAbout {
   id: ID!
   pathname: String!
   education: ComponentDataEntry
-  courses(filters: ComponentDataSetFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentDataSet]
   quote: String
   diplomas(filters: ComponentUiCardFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentUiCard]
   about: String
+  photo: UploadFileEntityResponse
 }
 
 type ComponentPageContactUs {
@@ -245,10 +238,11 @@ type ComponentPageHome {
   id: ID!
   pathname: String!
   section1: ComponentUiCard
-  section2: ComponentUiTextSection
+  section2(filters: ComponentUiHeadlineFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentUiHeadline]
   section3(filters: ComponentUiCardFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentUiCard]
-  section4(filters: ComponentUiCardFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentUiCard]
-  section5(filters: ComponentUiCardFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentUiCard]
+  section4: ComponentUiHeadline
+  section5(filters: ComponentUiHeadlineFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentUiHeadline]
+  section6: ComponentUiHeadline
 }
 
 enum ENUM_COMPONENTSHAREDMETASOCIAL_SOCIALNETWORK {
@@ -337,6 +331,20 @@ type ComponentUiGrid {
   children(filters: ComponentDataEntryFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentDataEntry]!
 }
 
+input ComponentUiHeadlineFiltersInput {
+  title: StringFilterInput
+  subtitle: StringFilterInput
+  and: [ComponentUiHeadlineFiltersInput]
+  or: [ComponentUiHeadlineFiltersInput]
+  not: ComponentUiHeadlineFiltersInput
+}
+
+type ComponentUiHeadline {
+  id: ID!
+  title: String
+  subtitle: String
+}
+
 input ComponentUiLinkFiltersInput {
   url: StringFilterInput
   title: StringFilterInput
@@ -381,14 +389,6 @@ type ComponentUiTab {
   id: ID!
   name: String!
   pane: ComponentUiCard!
-}
-
-type ComponentUiTextSection {
-  id: ID!
-  header1: String
-  text1: String
-  header2: String
-  text2: String
 }
 
 type ComponentUiText {
@@ -741,71 +741,64 @@ type EmailDesignerEmailTemplateEntityResponseCollection {
   meta: ResponseCollectionMeta!
 }
 
-input EventFiltersInput {
-  id: IDFilterInput
-  name: StringFilterInput
-  description: StringFilterInput
-  startDate: DateTimeFilterInput
-  endDate: DateTimeFilterInput
-  createdAt: DateTimeFilterInput
-  updatedAt: DateTimeFilterInput
-  publishedAt: DateTimeFilterInput
-  localizations: EventFiltersInput
-  locale: StringFilterInput
-  sitemap_exclude: BooleanFilterInput
-  and: [EventFiltersInput]
-  or: [EventFiltersInput]
-  not: EventFiltersInput
+enum ENUM_CONTACT_STATUS {
+  new
+  sent
+  failed
 }
 
-input EventInput {
+input ContactFiltersInput {
+  id: IDFilterInput
+  name: StringFilterInput
+  email: StringFilterInput
+  subject: StringFilterInput
+  text: StringFilterInput
+  status: StringFilterInput
+  createdAt: DateTimeFilterInput
+  updatedAt: DateTimeFilterInput
+  sitemap_exclude: BooleanFilterInput
+  and: [ContactFiltersInput]
+  or: [ContactFiltersInput]
+  not: ContactFiltersInput
+}
+
+input ContactInput {
   name: String
-  cover: ID
-  description: String
-  startDate: DateTime
-  endDate: DateTime
-  seo: ComponentSharedSeoInput
-  publishedAt: DateTime
+  email: String
+  subject: String
+  text: String
+  status: ENUM_CONTACT_STATUS
   sitemap_exclude: Boolean
 }
 
-type Event {
-  name: String
-  cover: UploadFileEntityResponse
-  description: String
-  startDate: DateTime!
-  endDate: DateTime
-  seo: ComponentSharedSeo
+type Contact {
+  name: String!
+  email: String!
+  subject: String
+  text: String
+  status: ENUM_CONTACT_STATUS
   createdAt: DateTime
   updatedAt: DateTime
-  publishedAt: DateTime
-  localizations(filters: EventFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], publicationState: PublicationState = LIVE): EventRelationResponseCollection
-  locale: String
 }
 
-type EventEntity {
+type ContactEntity {
   id: ID
-  attributes: Event
+  attributes: Contact
 }
 
-type EventEntityResponse {
-  data: EventEntity
+type ContactEntityResponse {
+  data: ContactEntity
 }
 
-type EventEntityResponseCollection {
-  data: [EventEntity!]!
+type ContactEntityResponseCollection {
+  data: [ContactEntity!]!
   meta: ResponseCollectionMeta!
-}
-
-type EventRelationResponseCollection {
-  data: [EventEntity!]!
 }
 
 input PostFiltersInput {
   id: IDFilterInput
   name: StringFilterInput
   slug: StringFilterInput
-  tags: TagFiltersInput
   teaser: StringFilterInput
   content: StringFilterInput
   createdAt: DateTimeFilterInput
@@ -822,7 +815,6 @@ input PostFiltersInput {
 input PostInput {
   name: String
   slug: String
-  tags: [ID]
   teaser: String
   content: String
   cover: ID
@@ -834,7 +826,6 @@ input PostInput {
 type Post {
   name: String!
   slug: String
-  tags(filters: TagFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): TagRelationResponseCollection
   teaser: String
   content: String
   cover: UploadFileEntityResponse
@@ -864,56 +855,59 @@ type PostRelationResponseCollection {
   data: [PostEntity!]!
 }
 
-input TagFiltersInput {
+input ServiceFiltersInput {
   id: IDFilterInput
   name: StringFilterInput
   slug: StringFilterInput
-  posts: PostFiltersInput
+  content: StringFilterInput
   createdAt: DateTimeFilterInput
   updatedAt: DateTimeFilterInput
-  localizations: TagFiltersInput
+  publishedAt: DateTimeFilterInput
+  localizations: ServiceFiltersInput
   locale: StringFilterInput
   sitemap_exclude: BooleanFilterInput
-  and: [TagFiltersInput]
-  or: [TagFiltersInput]
-  not: TagFiltersInput
+  and: [ServiceFiltersInput]
+  or: [ServiceFiltersInput]
+  not: ServiceFiltersInput
 }
 
-input TagInput {
+input ServiceInput {
   name: String
   slug: String
-  posts: [ID]
-  seo: ComponentSharedSeoInput
+  content: String
+  cover: ID
+  publishedAt: DateTime
   sitemap_exclude: Boolean
 }
 
-type Tag {
+type Service {
   name: String!
-  slug: String
-  posts(filters: PostFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], publicationState: PublicationState = LIVE): PostRelationResponseCollection
-  seo: ComponentSharedSeo
+  slug: String!
+  content: String
+  cover: UploadFileEntityResponse
   createdAt: DateTime
   updatedAt: DateTime
-  localizations(filters: TagFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): TagRelationResponseCollection
+  publishedAt: DateTime
+  localizations(filters: ServiceFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], publicationState: PublicationState = LIVE): ServiceRelationResponseCollection
   locale: String
 }
 
-type TagEntity {
+type ServiceEntity {
   id: ID
-  attributes: Tag
+  attributes: Service
 }
 
-type TagEntityResponse {
-  data: TagEntity
+type ServiceEntityResponse {
+  data: ServiceEntity
 }
 
-type TagEntityResponseCollection {
-  data: [TagEntity!]!
+type ServiceEntityResponseCollection {
+  data: [ServiceEntity!]!
   meta: ResponseCollectionMeta!
 }
 
-type TagRelationResponseCollection {
-  data: [TagEntity!]!
+type ServiceRelationResponseCollection {
+  data: [ServiceEntity!]!
 }
 
 input TranslationInput {
@@ -976,7 +970,7 @@ type WebsiteRelationResponseCollection {
   data: [WebsiteEntity!]!
 }
 
-union GenericMorph = ComponentDataEntry | ComponentDataSet | ComponentPageAbout | ComponentPageContactUs | ComponentPageHome | ComponentSharedMetaSocial | ComponentSharedSeo | ComponentUiCard | ComponentUiContact | ComponentUiGrid | ComponentUiLink | ComponentUiMenu | ComponentUiParagraph | ComponentUiSection | ComponentUiTab | ComponentUiTextSection | ComponentUiText | UploadFile | EntityNotesNote | I18NLocale | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | EmailDesignerEmailTemplate | Event | Post | Tag | Translation | Website
+union GenericMorph = ComponentDataEntry | ComponentDataSet | ComponentPageAbout | ComponentPageContactUs | ComponentPageHome | ComponentSharedMetaSocial | ComponentSharedSeo | ComponentUiCard | ComponentUiContact | ComponentUiGrid | ComponentUiHeadline | ComponentUiLink | ComponentUiMenu | ComponentUiParagraph | ComponentUiSection | ComponentUiTab | ComponentUiText | UploadFile | EntityNotesNote | I18NLocale | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | EmailDesignerEmailTemplate | Contact | Post | Service | Translation | Website
 
 input FileInfoInput {
   name: String
@@ -1056,15 +1050,15 @@ type Query {
   usersPermissionsUsers(filters: UsersPermissionsUserFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UsersPermissionsUserEntityResponseCollection
   emailDesignerEmailTemplate(id: ID): EmailDesignerEmailTemplateEntityResponse
   emailDesignerEmailTemplates(filters: EmailDesignerEmailTemplateFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): EmailDesignerEmailTemplateEntityResponseCollection
-  event(id: ID, locale: I18NLocaleCode): EventEntityResponse
-  events(filters: EventFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], publicationState: PublicationState = LIVE, locale: I18NLocaleCode): EventEntityResponseCollection
+  contact(id: ID): ContactEntityResponse
+  contacts(filters: ContactFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): ContactEntityResponseCollection
   post(id: ID, locale: I18NLocaleCode): PostEntityResponse
   posts(filters: PostFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], publicationState: PublicationState = LIVE, locale: I18NLocaleCode): PostEntityResponseCollection
-  tag(id: ID, locale: I18NLocaleCode): TagEntityResponse
-  tags(filters: TagFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], locale: I18NLocaleCode): TagEntityResponseCollection
+  service(id: ID, locale: I18NLocaleCode): ServiceEntityResponse
+  services(filters: ServiceFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], publicationState: PublicationState = LIVE, locale: I18NLocaleCode): ServiceEntityResponseCollection
   translation(publicationState: PublicationState = LIVE, locale: I18NLocaleCode): TranslationEntityResponse
   website(locale: I18NLocaleCode): WebsiteEntityResponse
-  me: UsersPermissionsUser
+  me: UsersPermissionsMe
 }
 
 type Mutation {
@@ -1077,24 +1071,17 @@ type Mutation {
   createEmailDesignerEmailTemplate(data: EmailDesignerEmailTemplateInput!): EmailDesignerEmailTemplateEntityResponse
   updateEmailDesignerEmailTemplate(id: ID!, data: EmailDesignerEmailTemplateInput!): EmailDesignerEmailTemplateEntityResponse
   deleteEmailDesignerEmailTemplate(id: ID!): EmailDesignerEmailTemplateEntityResponse
-  createEvent(data: EventInput!, locale: I18NLocaleCode): EventEntityResponse
-  updateEvent(id: ID!, data: EventInput!, locale: I18NLocaleCode): EventEntityResponse
-  deleteEvent(id: ID!, locale: I18NLocaleCode): EventEntityResponse
-  createPost(data: PostInput!, locale: I18NLocaleCode): PostEntityResponse
-  updatePost(id: ID!, data: PostInput!, locale: I18NLocaleCode): PostEntityResponse
-  deletePost(id: ID!, locale: I18NLocaleCode): PostEntityResponse
-  createTag(data: TagInput!, locale: I18NLocaleCode): TagEntityResponse
-  updateTag(id: ID!, data: TagInput!, locale: I18NLocaleCode): TagEntityResponse
-  deleteTag(id: ID!, locale: I18NLocaleCode): TagEntityResponse
+  createContact(data: ContactInput!): ContactEntityResponse
+  updateContact(id: ID!, data: ContactInput!): ContactEntityResponse
+  deleteContact(id: ID!): ContactEntityResponse
   updateTranslation(data: TranslationInput!, locale: I18NLocaleCode): TranslationEntityResponse
   deleteTranslation(locale: I18NLocaleCode): TranslationEntityResponse
   upload(refId: ID, ref: String, field: String, info: FileInfoInput, file: Upload!): UploadFileEntityResponse!
   multipleUpload(refId: ID, ref: String, field: String, files: [Upload]!): [UploadFileEntityResponse]!
   updateFileInfo(id: ID!, info: FileInfoInput): UploadFileEntityResponse!
   removeFile(id: ID!): UploadFileEntityResponse
-  createEventLocalization(id: ID, data: EventInput, locale: I18NLocaleCode): EventEntityResponse
   createPostLocalization(id: ID, data: PostInput, locale: I18NLocaleCode): PostEntityResponse
-  createTagLocalization(id: ID, data: TagInput, locale: I18NLocaleCode): TagEntityResponse
+  createServiceLocalization(id: ID, data: ServiceInput, locale: I18NLocaleCode): ServiceEntityResponse
   createTranslationLocalization(id: ID, data: TranslationInput, locale: I18NLocaleCode): TranslationEntityResponse
   createWebsiteLocalization(id: ID, data: WebsiteInput, locale: I18NLocaleCode): WebsiteEntityResponse
 

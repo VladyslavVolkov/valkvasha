@@ -1,0 +1,10 @@
+query services($locale: I18NLocaleCode, $pagination: PaginationArg, $filters: ServiceFiltersInput) {
+  services(locale: $locale, pagination: $pagination, filters: $filters) {
+    data {
+      id
+      attributes {
+        ...Service
+      }
+    }
+  }
+}

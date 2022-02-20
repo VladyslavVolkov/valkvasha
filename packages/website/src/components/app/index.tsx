@@ -1,10 +1,11 @@
-import { createContext, Dispatch, FC, SetStateAction, useContext, useState, VFC } from 'react'
-import { ClientProvider } from '@bn-digital/graphql-client'
-import I18nProvider from '@bn-digital/react-i18n'
 import { UIProvider } from '@bn-digital/antd'
+import { ClientProvider } from '@bn-digital/graphql-client'
 import { RoutingProvider } from '@bn-digital/react'
-import pages from 'src/pages'
-import { useToggle } from 'react-use'
+import I18nProvider from '@bn-digital/react-i18n'
+import { createContext, Dispatch, FC, SetStateAction, useContext, useState, VFC } from 'react'
+import { BrowserRouter } from 'react-router-dom'
+import { useLocalStorage, useToggle } from 'react-use'
+import Pages from 'src/pages'
 import './index.less'
 
 type AppTheme = string | 'dark' | 'light' | 'default'
@@ -12,41 +13,41 @@ type AppTheme = string | 'dark' | 'light' | 'default'
 type Size = 'small' | 'middle' | 'large'
 
 type AppProps = {
-  i18n: { locale: string; setLocale: Dispatch<SetStateAction<string>> }
+  i18n: { locale: string | undefined; setLocale: Dispatch<SetStateAction<string | undefined>> }
   burger: { opened: boolean; toggle: VoidFunction }
   ui: { theme: AppTheme; size: Size }
-  user: { authenticated: boolean | null; role: string | null }
 }
 
 const defaultValue: AppProps = {
-  i18n: { locale: 'en', setLocale: () => undefined },
+  i18n: { locale: 'ru', setLocale: () => undefined },
   burger: { opened: false, toggle: () => undefined },
-  ui: { theme: 'default', size: 'middle' },
-  user: { authenticated: null, role: null },
+  ui: { theme: 'default', size: 'large' },
 }
 
 const Context = createContext<AppProps>(defaultValue)
 
 const ContextProvider: FC = ({ children }) => {
-  const [locale, setLocale] = useState(defaultValue.i18n.locale)
+  const [locale, setLocale] = useLocalStorage<string>('locale', defaultValue.i18n.locale)
   const [opened, toggle] = useToggle(false)
   return <Context.Provider value={{ ...defaultValue, i18n: { locale, setLocale }, burger: { opened, toggle } }}>{children}</Context.Provider>
 }
 
 const App: VFC = () => (
-  <ContextProvider>
-    <ClientProvider production={import.meta.env.PROD}>
+  <ClientProvider production={import.meta.env.PROD}>
+    <ContextProvider>
       <Context.Consumer>
         {({ i18n: { locale }, ui: { size } }) => (
           <I18nProvider locale={locale}>
             <UIProvider size={size} locale={locale}>
-              <RoutingProvider routes={pages} />
+              <BrowserRouter>
+                <Pages />
+              </BrowserRouter>
             </UIProvider>
           </I18nProvider>
         )}
       </Context.Consumer>
-    </ClientProvider>
-  </ContextProvider>
+    </ContextProvider>
+  </ClientProvider>
 )
 
 const useApp = () => useContext<AppProps>(Context)

@@ -1,11 +1,11 @@
 import { FC } from 'react'
-import { Layout } from 'antd'
-import { ContactForm } from '../../components/contact/ContactForm'
+import { ContactForm } from 'src/components/contact/ContactForm'
+import { Page } from 'src/components/page'
 
 const ContactUs: FC = () => (
-  <Layout>
+  <Page>
     <ContactForm />
-  </Layout>
+  </Page>
 )
 
 export default ContactUs

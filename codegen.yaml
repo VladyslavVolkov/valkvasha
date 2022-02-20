@@ -3,6 +3,7 @@ documents:
   - packages/*/src/graphql/*/*.graphql
 config:
   scalars:
+    I18NLocaleCode: 'ru|ua'
     Upload: unknown
     Date: String
     Time: String
@@ -18,9 +19,9 @@ generates:
       - typescript-operations:
           preResolveTypes: true
       - typescript-react-apollo:
+          fragmentVariableSuffix: Props
           withComponent: true
           withHooks: true
-          withResultType: true
   packages/website/src/types/graphql.d.ts:
     config:
       noExport: true

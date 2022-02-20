@@ -7,6 +7,21 @@ module.exports = ({ env }) => ({
   'seo': {
     enabled: true,
   },
+  'slugify': {
+    enabled: true,
+    config: {
+      contentTypes: {
+        post: {
+          field: 'slug',
+          references: 'name',
+        },
+        service: {
+          field: 'slug',
+          references: 'name',
+        },
+      },
+    },
+  },
   'graphql': {
     enabled: true,
     config: {
@@ -36,15 +51,15 @@ module.exports = ({ env }) => ({
       provider: 'nodemailer',
       providerOptions: {
         host: env('SMTP_HOST', 'bndigital.dev'),
-        port: env('SMTP_PORT', 31025),
+        port: env('SMTP_PORT', 1025),
         auth: {
           user: env('SMTP_USERNAME', ''),
           pass: env('SMTP_PASSWORD', ''),
         },
       },
       settings: {
-        defaultFrom: env('SMTP_MAIL_FROM', `no-reply@${env('DOMAIN', `${name}.bndigital.dev`)}`),
-        defaultReplyTo: env('SMTP_MAIL_TO', `no-reply@${env('DOMAIN', `${name}.bndigital.dev`)}`),
+        defaultFrom: env('SMTP_MAIL_FROM', `no-reply@${env('DOMAIN', `valkvasha.com`)}`),
+        defaultReplyTo: env('SMTP_MAIL_TO', `no-reply@${env('DOMAIN', `valkvasha.com`)}`),
       },
     },
   },

@@ -1,0 +1,10 @@
+fragment Service on Service {
+  name
+  slug
+  content
+  cover {
+    data {
+      ...File
+    }
+  }
+}
