@@ -27,7 +27,7 @@ jobs:
           command_timeout: 20m
           script: |
             # Change working directory
-            cd ~/valkvasha
+            cd ~/workspace
             
             # Cleanup repository state
             git reset --hard HEAD
