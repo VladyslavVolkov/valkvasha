@@ -17,13 +17,6 @@ jobs:
       url: https://valkvasha.hiberbee.live
 
     steps:
-      - name: Setup Docker
-        uses: nightstory/setup-docker-remote@v1
-        with:
-          ssh_host: ${{ secrets.SSH_HOST }}
-          ssh_host_user: ${{ secrets.SSH_USERNAME }}
-          ssh_key: ${{ secrets.SSH_KEY }}
-
       - name: Build and deploy Docker stack
         uses: appleboy/ssh-action@master
         with:
