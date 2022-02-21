@@ -37,6 +37,7 @@ services:
     build:
       context: packages/cms
     image: cms:${IMAGE_TAG:-latest}
+    user: node
     networks:
       - public
       - private
