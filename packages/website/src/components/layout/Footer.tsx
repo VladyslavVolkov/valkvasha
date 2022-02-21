@@ -1,23 +1,14 @@
 import { FacebookFilled, InstagramFilled } from '@ant-design/icons'
-import { Col, List, Row } from 'antd'
+import { Card, Col, Row } from 'antd'
 import { FC } from 'react'
 
-const Footer: FC = () => (
-  <Row justify={'space-between'}>
-    <Col></Col>
+const Footer: FC<{ data: Maybe<EntryFragment>[] }> = ({ data = [] }) => (
+  <Row align={'middle'} justify={'space-between'}>
     <Col>
-      <List
-        grid={{ column: 2 }}
-        itemLayout={'horizontal'}
-        split={false}
-        size={'default'}
-        dataSource={[InstagramFilled, FacebookFilled]}
-        renderItem={Icon => (
-          <List.Item>
-            <Icon width={32} size={32} />
-          </List.Item>
-        )}
-      ></List>
+      <Card.Meta title={data?.find(it => it?.key === 'header.title')?.value} description={data?.find(it => it?.key === 'header.phone')?.value}></Card.Meta>
+    </Col>
+    <Col style={{ fontSize: 32 }}>
+      <InstagramFilled size={32} /> <FacebookFilled size={32} />
     </Col>
   </Row>
 )

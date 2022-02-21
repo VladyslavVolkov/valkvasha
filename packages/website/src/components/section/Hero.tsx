@@ -2,6 +2,7 @@ import { Button, Col, Row, Typography } from 'antd'
 import { VFC } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Content } from 'src/components/layout'
+import { ArrowRightOutlined } from '@ant-design/icons'
 
 const Hero: VFC<Partial<CardFragment>> = ({ title = '', subtitle = '', media, description }) => {
   const navigate = useNavigate()
@@ -25,10 +26,10 @@ const Hero: VFC<Partial<CardFragment>> = ({ title = '', subtitle = '', media, de
               <Typography.Title level={2}>{title}</Typography.Title>
             </Col>
             <Col span={24} style={{ textAlign: 'center' }}>
-              <Typography.Title level={3}>{description}</Typography.Title>
+              <Typography.Title level={4}>{description}</Typography.Title>
             </Col>
             <Col span={24} style={{ textAlign: 'center' }}>
-              <Button onClick={() => navigate('/contacts')} type={'primary'}>
+              <Button icon={<ArrowRightOutlined />} onClick={() => navigate('/contacts')} type={'primary'}>
                 {subtitle}
               </Button>
             </Col>

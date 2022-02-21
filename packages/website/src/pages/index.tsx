@@ -1,19 +1,19 @@
 import { lazy } from 'react'
 import { RouteObject, useRoutes } from 'react-router-dom'
-import { DefaultLayout } from '../components/layout'
+import Layout from 'src/components/layout'
 
 const Service = lazy(() => import('./service'))
 const Post = lazy(() => import('./post/Post'))
 const Posts = lazy(() => import('./post/Posts'))
 const Home = lazy(() => import('./home'))
 const About = lazy(() => import('./about'))
-const ContactUs = lazy(() => import('./contact-us'))
+const ContactUs = lazy(() => import('./contacts'))
 const NotFound = lazy(() => import('./not-found'))
 
 const pages: RouteObject[] = [
   {
     path: '',
-    element: <DefaultLayout />,
+    element: <Layout />,
     children: [
       {
         element: <Home />,
@@ -46,6 +46,7 @@ const pages: RouteObject[] = [
     ],
   },
 ]
+
 const Pages = () => useRoutes(pages)
 
 export { Pages as default }

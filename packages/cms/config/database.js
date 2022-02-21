@@ -10,7 +10,7 @@ const Formatter = require('knex/lib/formatter')
  */
 Client.prototype.wrapIdentifier = value => {
   if (value === '*') return value
-  const matched = value.match(/(.*?)(\[[0-9]\])/)
+  const matched = value.match(/(.*?)(\[\d+])/)
   if (matched) return Client.prototype.wrapIdentifier.wrapIdentifier(matched[1]) + matched[2]
   return `"${value.replace(/([A-Z])/g, (_, s) => `_${s.toLowerCase()}`).replace(/"/g, '""')}"`
 }

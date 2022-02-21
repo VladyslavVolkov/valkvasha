@@ -1,3 +1,4 @@
+import { Typography } from 'antd'
 import { FC } from 'react'
 import Markdown from 'react-markdown'
 import { useParams } from 'react-router-dom'
@@ -12,14 +13,32 @@ const Post: FC = () => {
 
   return (
     <Page>
-      <Content>
-        <PostsComponent variables={{ pagination: { limit: 1 }, locale: i18n.locale, filters: { slug: { eq: slug } } }}>
-          {({ data }) => {
-            const content = data?.posts?.data?.[0]?.attributes?.content
-            return content ? <Markdown>{content}</Markdown> : null
-          }}
-        </PostsComponent>
-      </Content>
+      <PostsComponent
+        variables={{
+          pagination: { limit: 1 },
+          locale: i18n.locale,
+          filters: {
+            or: [
+              {
+                localizations: { slug: { eq: slug } },
+              },
+              {
+                slug: { eq: slug },
+              },
+            ],
+          },
+        }}
+      >
+        {({ data }) => {
+          const post = data?.posts?.data?.[0]?.attributes
+          return post ? (
+            <Content centered={false}>
+              <Typography.Title level={1}>{post.name}</Typography.Title>
+              {post.content && <Markdown>{post?.content}</Markdown>}
+            </Content>
+          ) : null
+        }}
+      </PostsComponent>
     </Page>
   )
 }

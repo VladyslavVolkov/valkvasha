@@ -5,7 +5,10 @@ export default configureReact(
   {
     fonts: {
       google: {
-        families: [{ name: 'Roboto', styles: 'wght@400;500;600;700;900' }],
+        families: [
+          { name: 'Merriweather', styles: 'wght@400;500;600;700;900' },
+          { name: 'Jost', styles: 'wght@400;500;600;700;900' },
+        ],
       },
     },
   },

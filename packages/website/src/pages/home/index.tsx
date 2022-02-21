@@ -38,7 +38,11 @@ const Home: FC = () => {
                   </Row>
                 }
               >
-                <Card.Meta style={{ height: 196 }} title={it?.title} description={<Markdown>{it?.description ?? ''}</Markdown>} />
+                <Card.Meta
+                  style={{ height: 240 }}
+                  title={<Typography.Title level={5}>{it?.title}</Typography.Title>}
+                  description={<Markdown>{it?.description ?? ''}</Markdown>}
+                />
               </Card>
             </List.Item>
           )}
@@ -85,7 +89,6 @@ const Home: FC = () => {
                 <List.Item key={it?.id} style={{ cursor: 'pointer' }} onClick={() => navigate(`/posts/${it?.attributes?.slug}`)}>
                   <Card bordered={false} cover={<img alt={it?.attributes?.name ?? ''} src={it?.attributes?.cover?.data?.attributes?.url} />}>
                     <Card.Meta
-                      style={{ height: 224 }}
                       title={<Typography.Title level={5}>{it?.attributes?.name}</Typography.Title>}
                       description={<Markdown>{it?.attributes?.teaser ?? ''}</Markdown>}
                     />

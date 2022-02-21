@@ -3,11 +3,11 @@ documents:
   - packages/*/src/graphql/*/*.graphql
 config:
   scalars:
-    I18NLocaleCode: 'ru|ua'
+    I18NLocaleCode: "'ru'|'uk'"
     Upload: unknown
     Date: String
     Time: String
-    JSON: Record<string, Object|Array|String|Number|Boolean|null|undefined>
+    JSON: Record<string, Record<string|unknown>|Array|String|Number|Boolean|null|undefined>
     Long: Number
     DateTime: Date
 generates:

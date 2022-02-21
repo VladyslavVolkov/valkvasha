@@ -75,7 +75,7 @@ const DefaultLayout: VFC = () => {
             <WebsiteComponent variables={{ locale }}>
               {({ data }) => {
                 function filterByPathname<T extends ContentProps>(data: T[] = []): T | null {
-                  return data.find(it => it?.pathname === pathname) ?? null
+                  return (data.find(it => it?.pathname === pathname) ?? null) as T
                 }
 
                 return (
@@ -87,8 +87,8 @@ const DefaultLayout: VFC = () => {
             </WebsiteComponent>
           </Layout.Content>
           <Layout.Footer>
-            <Content>
-              <Footer />
+            <Content style={{ padding: '40px 24px' }} centered={false}>
+              <Footer data={header} />
             </Content>
           </Layout.Footer>
           <Drawer width={'50%'} height={'100%'} onClose={toggle} visible={opened} />
@@ -98,4 +98,4 @@ const DefaultLayout: VFC = () => {
   )
 }
 
-export { DefaultLayout }
+export { DefaultLayout as default }

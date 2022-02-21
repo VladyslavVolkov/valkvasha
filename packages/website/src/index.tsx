@@ -1,7 +1,4 @@
-import { renderApp } from '@bn-digital/react'
-import { reportWebVitals } from '@bn-digital/sdk'
+import { render } from 'react-dom'
 import { App } from 'src/components/app'
 
-renderApp(App, { strict: false })
-
-reportWebVitals()
+render(<App />, document.querySelector('#root'))

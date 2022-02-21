@@ -1,6 +1,13 @@
 fragment About on ComponentPageAbout {
   id
   about
+  pathname
+  quote
+  photo {
+    data {
+      ...File
+    }
+  }
   diplomas {
     id
     title
@@ -12,7 +19,6 @@ fragment About on ComponentPageAbout {
       }
     }
   }
-  quote
   education {
     ...Entry
   }

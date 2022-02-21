@@ -1,0 +1,55 @@
+name: Production
+on:
+  push:
+    tags:
+      - "*"
+
+env:
+  IMAGE_TAG: ${{ github.ref_name }}
+  DOCKER_BUILDKIT: "1"
+
+jobs:
+  release:
+    name: Production release
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://valkvasha.hiberbee.live
+
+    steps:
+      - name: Setup Docker
+        uses: nightstory/setup-docker-remote@v1
+        with:
+          ssh_host: ${{ secrets.SSH_HOST }}
+          ssh_host_user: ${{ secrets.SSH_USERNAME }}
+          ssh_key: ${{ secrets.SSH_KEY }}
+
+      - name: Build and deploy Docker stack
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          envs: IMAGE_TAG,DOCKER_BUILDKIT
+          command_timeout: 20m
+          script: |
+            # Change working directory
+            cd ~/valkvasha
+            
+            # Cleanup repository state
+            git reset --hard HEAD
+            
+            # Pull latest changes
+            git pull
+            
+            # Pull latest changes
+            git checkout tags/${{ github.ref_name }}
+            
+            # Build Docker images
+            docker compose build
+            
+            # Run a new container from a new image
+            docker compose up -d
+            
+            # Switch back from detached HEAD
+            git switch -
