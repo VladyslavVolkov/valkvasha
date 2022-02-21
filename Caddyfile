@@ -6,12 +6,45 @@
         route /* {
                 reverse_proxy website:5000
         }
-
-        @cms {
-                path ^/(admin|api|i18n|graphql|content-manager|content-type-builder|email|email-designer|sitemap|users-permissions|upload|uploads)*
+        route /admin* {
+                reverse_proxy cms:5000
         }
-
-        reverse_proxy @cms cms:5000
+        route /api* {
+                reverse_proxy cms:5000
+        }
+        route /i18n* {
+                reverse_proxy cms:5000
+        }
+        route /graphql {
+                reverse_proxy cms:5000
+        }
+        route /content-manager* {
+                reverse_proxy cms:5000
+        }
+        route /content-type-builder* {
+                reverse_proxy cms:5000
+        }
+        route /email* {
+                reverse_proxy cms:5000
+        }
+        route /email-designer* {
+                reverse_proxy cms:5000
+        }
+        route /email-designer* {
+                reverse_proxy cms:5000
+        }
+        route /sitemap* {
+                reverse_proxy cms:5000
+        }
+        route /users-permissions* {
+                reverse_proxy cms:5000
+        }
+        route /upload* {
+                reverse_proxy cms:5000
+        }
+        route /uploads* {
+                reverse_proxy cms:5000
+        }
 
         file_server
 }
