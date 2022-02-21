@@ -6600,6 +6600,7 @@ __metadata:
     "@types/react-helmet": ^6.1.5
     antd: ^4.18.7
     classnames: ^2.3.1
+    graphql: ^16.3.0
     react: ^17.0.2
     react-dom: ^17.0.2
     react-helmet: ^6.1.0
