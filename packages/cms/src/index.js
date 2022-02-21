@@ -1,5 +1,4 @@
 const { generateGraphqlSchema, getExtensionService, getSchemaExtension } = require('./graphql')
-const { createSuperAdmin } = require('./helpers')
 
 module.exports = {
   register({ strapi }) {
@@ -13,7 +12,6 @@ module.exports = {
   },
 
   bootstrap({ strapi }) {
-    createSuperAdmin(strapi).then(user => strapi.log.info(`[Strapi] Admin user: ${user.username}`))
     generateGraphqlSchema(strapi)
   },
 }
