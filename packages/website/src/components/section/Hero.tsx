@@ -21,7 +21,7 @@ const Hero: VFC<Partial<CardFragment>> = ({ title = '', subtitle = '', media, de
     >
       <Content>
         <Col span={12}>
-          <Row justify={'center'} align={'middle'}>
+          <Row gutter={[0, 24]} justify={'center'} align={'middle'}>
             <Col span={24} style={{ textAlign: 'center' }}>
               <Typography.Title level={2}>{title}</Typography.Title>
             </Col>
