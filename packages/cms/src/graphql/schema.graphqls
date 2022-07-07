@@ -275,6 +275,20 @@ type ComponentSharedMetaSocial {
   image: UploadFileEntityResponse
 }
 
+input ComponentSharedSeoFiltersInput {
+  metaTitle: StringFilterInput
+  metaDescription: StringFilterInput
+  metaSocial: ComponentSharedMetaSocialFiltersInput
+  keywords: StringFilterInput
+  metaRobots: StringFilterInput
+  structuredData: JSONFilterInput
+  metaViewport: StringFilterInput
+  canonicalURL: StringFilterInput
+  and: [ComponentSharedSeoFiltersInput]
+  or: [ComponentSharedSeoFiltersInput]
+  not: ComponentSharedSeoFiltersInput
+}
+
 input ComponentSharedSeoInput {
   id: ID
   metaTitle: String
@@ -801,6 +815,7 @@ input PostFiltersInput {
   slug: StringFilterInput
   teaser: StringFilterInput
   content: StringFilterInput
+  seo: ComponentSharedSeoFiltersInput
   createdAt: DateTimeFilterInput
   updatedAt: DateTimeFilterInput
   publishedAt: DateTimeFilterInput
@@ -978,6 +993,9 @@ input FileInfoInput {
   caption: String
 }
 
+"""Union Type of all registered slug content types"""
+union FindSlugResponse = PostEntityResponse | ServiceEntityResponse
+
 """A string used to identify an i18n locale"""
 scalar I18NLocaleCode
 
@@ -1058,6 +1076,7 @@ type Query {
   services(filters: ServiceFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], publicationState: PublicationState = LIVE, locale: I18NLocaleCode): ServiceEntityResponseCollection
   translation(publicationState: PublicationState = LIVE, locale: I18NLocaleCode): TranslationEntityResponse
   website(locale: I18NLocaleCode): WebsiteEntityResponse
+  findSlug(modelName: String, slug: String, publicationState: String): FindSlugResponse
   me: UsersPermissionsMe
 }
 
@@ -1100,7 +1119,7 @@ type Mutation {
   """Update an existing user"""
   updateUsersPermissionsUser(id: ID!, data: UsersPermissionsUserInput!): UsersPermissionsUserEntityResponse!
 
-  """Update an existing user"""
+  """Delete an existing user"""
   deleteUsersPermissionsUser(id: ID!): UsersPermissionsUserEntityResponse!
   login(input: UsersPermissionsLoginInput!): UsersPermissionsLoginPayload!
 

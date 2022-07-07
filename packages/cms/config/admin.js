@@ -5,7 +5,10 @@ const forgotPasswordTemplate = fs.readFileSync(path.join(__dirname, '..', 'src',
 
 module.exports = ({ env }) => ({
   auth: {
-    secret: env('ADMIN_JWT_SECRET', 'c8c036c43da279fccb02af9ef8b0ad97'),
+    secret: env('ADMIN_JWT_SECRET', 'ebccc102-fd58-4aa0-b2de-6998ad5f9520'),
+  },
+  apiToken:{
+    salt: env("API_TOKEN_SALT", '4a001faa-3440-4d4b-a6ee-f6299de98a6f')
   },
   watchIgnoreFiles: ['**/graphql/**', '**/config/sync/**'],
   forgotPassword: {

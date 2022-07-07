@@ -1,14 +1,16 @@
+import './DefaultLayout.less'
+
 import { Col, Drawer, Layout, Row, Spin } from 'antd'
-import { Outlet } from 'react-router'
 import { Suspense, useEffect, VFC } from 'react'
+import { Outlet } from 'react-router'
 import { generatePath, Link, useLocation } from 'react-router-dom'
 import { AppContext, useApp } from 'src/components/app'
 import { TopMenu } from 'src/components/menu/Navigation'
 import { useTranslationsQuery, WebsiteComponent } from 'src/graphql'
-import { Footer } from './Footer'
+
 import { Content } from './Content'
+import { Footer } from './Footer'
 import { Header } from './Header'
-import './DefaultLayout.less'
 
 const PageLoader: VFC = () => (
   <Row style={{ margin: '0 auto', minHeight: 'calc(100vh - 256px)', height: '100%', width: '100%' }} align={'middle'} justify={'center'}>
@@ -28,7 +30,7 @@ const topNavigation = [
 
 const DefaultLayout: VFC = () => {
   const {
-    i18n: { locale, setLocale },
+    i18n: { locale },
   } = useApp()
 
   const { pathname } = useLocation()
@@ -53,7 +55,7 @@ const DefaultLayout: VFC = () => {
             <Col span={24}>
               <Content centered={false}>
                 <Row justify={'space-between'} align={'middle'}>
-                  <Col span={20}>
+                  <Col span={24}>
                     <TopMenu
                       data={topNavigation?.map(it => ({
                         ...it,
@@ -61,16 +63,10 @@ const DefaultLayout: VFC = () => {
                       }))}
                     />
                   </Col>
-                  <Col>
-                    <Link to={'#'} type={'ghost'} onClick={() => setLocale(locale === 'ru' ? 'uk' : 'ru')}>
-                      {locale === 'ru' ? 'uk' : 'ru'}
-                    </Link>
-                  </Col>
                 </Row>
               </Content>
             </Col>
           </Row>
-
           <Layout.Content>
             <WebsiteComponent variables={{ locale }}>
               {({ data }) => {

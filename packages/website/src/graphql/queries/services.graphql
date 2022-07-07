@@ -4,6 +4,7 @@ query services($locale: I18NLocaleCode, $pagination: PaginationArg, $filters: Se
       id
       attributes {
         ...Service
+
       }
     }
   }

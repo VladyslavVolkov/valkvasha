@@ -1,4 +1,4 @@
-import { render } from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import { App } from 'src/components/app'
-
-render(<App />, document.querySelector('#root'))
+const element = document.querySelector('#root')
+element && createRoot(element).render(<App />)

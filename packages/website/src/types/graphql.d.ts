@@ -169,6 +169,20 @@ type ComponentSharedSeoMetaSocialArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
+type ComponentSharedSeoFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<ComponentSharedSeoFiltersInput>>>;
+  canonicalURL?: InputMaybe<StringFilterInput>;
+  keywords?: InputMaybe<StringFilterInput>;
+  metaDescription?: InputMaybe<StringFilterInput>;
+  metaRobots?: InputMaybe<StringFilterInput>;
+  metaSocial?: InputMaybe<ComponentSharedMetaSocialFiltersInput>;
+  metaTitle?: InputMaybe<StringFilterInput>;
+  metaViewport?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<ComponentSharedSeoFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<ComponentSharedSeoFiltersInput>>>;
+  structuredData?: InputMaybe<JsonFilterInput>;
+};
+
 type ComponentSharedSeoInput = {
   canonicalURL?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
@@ -499,6 +513,9 @@ type FileInfoInput = {
   name?: InputMaybe<Scalars['String']>;
 };
 
+/** Union Type of all registered slug content types */
+type FindSlugResponse = PostEntityResponse | ServiceEntityResponse;
+
 type FloatFilterInput = {
   and?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
   between?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
@@ -645,7 +662,7 @@ type Mutation = {
   deleteUploadFile?: Maybe<UploadFileEntityResponse>;
   /** Delete an existing role */
   deleteUsersPermissionsRole?: Maybe<UsersPermissionsDeleteRolePayload>;
-  /** Update an existing user */
+  /** Delete an existing user */
   deleteUsersPermissionsUser: UsersPermissionsUserEntityResponse;
   /** Confirm an email users email address */
   emailConfirmation?: Maybe<UsersPermissionsLoginPayload>;
@@ -922,6 +939,7 @@ type PostFiltersInput = {
   not?: InputMaybe<PostFiltersInput>;
   or?: InputMaybe<Array<InputMaybe<PostFiltersInput>>>;
   publishedAt?: InputMaybe<DateTimeFilterInput>;
+  seo?: InputMaybe<ComponentSharedSeoFiltersInput>;
   sitemap_exclude?: InputMaybe<BooleanFilterInput>;
   slug?: InputMaybe<StringFilterInput>;
   teaser?: InputMaybe<StringFilterInput>;
@@ -954,6 +972,7 @@ type Query = {
   emailDesignerEmailTemplates?: Maybe<EmailDesignerEmailTemplateEntityResponseCollection>;
   entityNotesNote?: Maybe<EntityNotesNoteEntityResponse>;
   entityNotesNotes?: Maybe<EntityNotesNoteEntityResponseCollection>;
+  findSlug?: Maybe<FindSlugResponse>;
   i18NLocale?: Maybe<I18NLocaleEntityResponse>;
   i18NLocales?: Maybe<I18NLocaleEntityResponseCollection>;
   me?: Maybe<UsersPermissionsMe>;
@@ -1005,6 +1024,13 @@ type QueryEntityNotesNotesArgs = {
   filters?: InputMaybe<EntityNotesNoteFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+type QueryFindSlugArgs = {
+  modelName?: InputMaybe<Scalars['String']>;
+  publicationState?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -1555,7 +1581,7 @@ type HomeFragment = { id: string, pathname: string, section1?: { id: string, tit
 
 type PostFragment = { slug?: string | null, name: string, teaser?: string | null, content?: string | null, cover?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null };
 
-type ServiceFragment = { name: string, slug: string, content?: string | null, cover?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null };
+type ServiceFragment = { name: string, slug: string, content?: string | null, locale?: string | null, localizations?: { data: Array<{ id?: string | null, attributes?: { content?: string | null, locale?: string | null, name: string } | null }> } | null, cover?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null };
 
 type WebsiteFragment = { content?: Array<{ __typename: 'ComponentPageAbout', id: string, about?: string | null, pathname: string, quote?: string | null, photo?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null, diplomas?: Array<{ id: string, title?: string | null, subtitle?: string | null, description?: string | null, media?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null } | null> | null, education?: { id: string, key?: string | null, value: string } | null } | { __typename: 'ComponentPageContactUs', id: string, pathname: string, contact?: { id: string, phone?: string | null, email?: string | null, address?: string | null } | null } | { __typename: 'ComponentPageHome', id: string, pathname: string, section1?: { id: string, title?: string | null, subtitle?: string | null, description?: string | null, media?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null } | null, section2?: Array<{ id: string, title?: string | null, subtitle?: string | null } | null> | null, section3?: Array<{ id: string, title?: string | null, subtitle?: string | null, description?: string | null, media?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null } | null> | null, section4?: { id: string, title?: string | null, subtitle?: string | null } | null, section5?: Array<{ id: string, title?: string | null, subtitle?: string | null } | null> | null, section6?: { id: string, title?: string | null, subtitle?: string | null } | null } | { __typename: 'Error' } | null> | null };
 
@@ -1581,7 +1607,7 @@ type ServiceQueryVariables = Exact<{
 }>;
 
 
-type ServiceQuery = { service?: { data?: { id?: string | null, attributes?: { name: string, slug: string, content?: string | null, cover?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null } | null } | null } | null };
+type ServiceQuery = { service?: { data?: { id?: string | null, attributes?: { name: string, slug: string, content?: string | null, locale?: string | null, localizations?: { data: Array<{ id?: string | null, attributes?: { content?: string | null, locale?: string | null, name: string } | null }> } | null, cover?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null } | null } | null } | null };
 
 type ServicesQueryVariables = Exact<{
   locale?: InputMaybe<Scalars['I18NLocaleCode']>;
@@ -1590,7 +1616,7 @@ type ServicesQueryVariables = Exact<{
 }>;
 
 
-type ServicesQuery = { services?: { data: Array<{ id?: string | null, attributes?: { name: string, slug: string, content?: string | null, cover?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null } | null }> } | null };
+type ServicesQuery = { services?: { data: Array<{ id?: string | null, attributes?: { name: string, slug: string, content?: string | null, locale?: string | null, localizations?: { data: Array<{ id?: string | null, attributes?: { content?: string | null, locale?: string | null, name: string } | null }> } | null, cover?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null } | null }> } | null };
 
 type TranslationsQueryVariables = Exact<{
   locale?: InputMaybe<Scalars['I18NLocaleCode']>;

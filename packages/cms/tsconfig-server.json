@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "react",
+    "lib": ["es2019", "es2020.promise", "es2020.bigint", "es2020.string", "DOM"],
+    "module": "commonjs",
+    "noEmitOnError": true,
+    "noImplicitAny": false,
+    "outDir": "dist",
+    "rootDir": ".",
+    "target": "es2019"
+  },
+  "include": ["src/**/*.json", "./"],
+  "exclude": ["node_modules/", "build/", "dist/", "src/admin", ".cache/", ".tmp/"]
+}

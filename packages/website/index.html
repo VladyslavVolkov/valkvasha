@@ -4,11 +4,19 @@
     <base href="/" />
     <meta charset="utf-8" />
     <meta content="width=device-width,initial-scale=1.0" name="viewport" />
-    <link href="/favicon.png" id="favicon" rel="icon" />
-    <title>Психолог Киев | Валерия Кваша</title>
+    <link href="/favicon.svg" id="favicon" rel="icon" />
+    <title>Психолог Киев | Валерия Кваша</title><script src="https://pay.fondy.eu/static_common/v1/checkout/ipsp.js"></script>
+    <script>
+      const button = $ipsp.get('button');
+      button.setMerchantId(1496652);
+      button.setAmount(1000, 'UAH', true);
+      button.setResponseUrl(window.location.href);
+      button.setHost('pay.fondy.eu');
+    </script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="./src/index.tsx"></script>
+
   </body>
 </html>

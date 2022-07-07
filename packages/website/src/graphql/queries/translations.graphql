@@ -3,7 +3,7 @@ query translations($locale: I18NLocaleCode = "ru") {
     data {
       id
       attributes {
-        entry {
+        entry(pagination: { limit: 100}) {
           ...Entry
         }
       }

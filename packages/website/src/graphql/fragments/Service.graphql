@@ -2,6 +2,17 @@ fragment Service on Service {
   name
   slug
   content
+  locale
+  localizations {
+    data {
+      id
+      attributes {
+        content
+        locale
+        name
+      }
+    }
+  }
   cover {
     data {
       ...File

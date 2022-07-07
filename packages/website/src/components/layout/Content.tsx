@@ -1,11 +1,12 @@
+import './Content.less'
+
 import { Layout } from 'antd'
 import classnames from 'classnames'
-import { CSSProperties, FC } from 'react'
-import './Content.less'
+import {CSSProperties, FC, PropsWithChildren} from 'react'
 
 type ContentProps = { fixed: boolean; centered: boolean; style: CSSProperties }
 
-const Content: FC<Partial<ContentProps>> = ({ fixed = true, centered = true, style, children }) => (
+const Content: FC<PropsWithChildren<Partial<ContentProps>>> = ({ fixed = true, centered = true, style, children }) => (
   <Layout.Content
     style={style}
     className={classnames({

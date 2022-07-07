@@ -2,6 +2,7 @@ import { lazy } from 'react'
 import { RouteObject, useRoutes } from 'react-router-dom'
 import Layout from 'src/components/layout'
 
+const Pay = lazy(() => import('./pay'))
 const Service = lazy(() => import('./service'))
 const Post = lazy(() => import('./post/Post'))
 const Posts = lazy(() => import('./post/Posts'))
@@ -18,6 +19,10 @@ const pages: RouteObject[] = [
       {
         element: <Home />,
         path: '',
+      },
+      {
+        element: <Pay />,
+        path: 'pay',
       },
       {
         element: <Service />,

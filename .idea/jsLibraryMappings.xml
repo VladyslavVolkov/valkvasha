@@ -3,6 +3,8 @@
   <component name="JavaScriptLibraryMappings">
     <file url="file://$PROJECT_DIR$" libraries="{Node.js Core}" />
     <file url="file://$PROJECT_DIR$/packages/cms" libraries="{Node.js Core}" />
+    <file url="file://$PROJECT_DIR$/packages/cms/src" libraries="{Node.js Core}" />
     <file url="file://$PROJECT_DIR$/packages/website" libraries="{Node.js Core}" />
+    <file url="file://$PROJECT_DIR$/packages/website/src" libraries="{Node.js Core}" />
   </component>
 </project>

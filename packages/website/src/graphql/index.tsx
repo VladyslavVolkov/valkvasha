@@ -30,7 +30,7 @@ export type HomeFragment = { id: string, pathname: string, section1?: { id: stri
 
 export type PostFragment = { slug?: string | null, name: string, teaser?: string | null, content?: string | null, cover?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null };
 
-export type ServiceFragment = { name: string, slug: string, content?: string | null, cover?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null };
+export type ServiceFragment = { name: string, slug: string, content?: string | null, locale?: string | null, localizations?: { data: Array<{ id?: string | null, attributes?: { content?: string | null, locale?: string | null, name: string } | null }> } | null, cover?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null };
 
 export type WebsiteFragment = { content?: Array<{ __typename: 'ComponentPageAbout', id: string, about?: string | null, pathname: string, quote?: string | null, photo?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null, diplomas?: Array<{ id: string, title?: string | null, subtitle?: string | null, description?: string | null, media?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null } | null> | null, education?: { id: string, key?: string | null, value: string } | null } | { __typename: 'ComponentPageContactUs', id: string, pathname: string, contact?: { id: string, phone?: string | null, email?: string | null, address?: string | null } | null } | { __typename: 'ComponentPageHome', id: string, pathname: string, section1?: { id: string, title?: string | null, subtitle?: string | null, description?: string | null, media?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null } | null, section2?: Array<{ id: string, title?: string | null, subtitle?: string | null } | null> | null, section3?: Array<{ id: string, title?: string | null, subtitle?: string | null, description?: string | null, media?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null } | null> | null, section4?: { id: string, title?: string | null, subtitle?: string | null } | null, section5?: Array<{ id: string, title?: string | null, subtitle?: string | null } | null> | null, section6?: { id: string, title?: string | null, subtitle?: string | null } | null } | { __typename: 'Error' } | null> | null };
 
@@ -56,7 +56,7 @@ export type ServiceQueryVariables = Exact<{
 }>;
 
 
-export type ServiceQuery = { service?: { data?: { id?: string | null, attributes?: { name: string, slug: string, content?: string | null, cover?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null } | null } | null } | null };
+export type ServiceQuery = { service?: { data?: { id?: string | null, attributes?: { name: string, slug: string, content?: string | null, locale?: string | null, localizations?: { data: Array<{ id?: string | null, attributes?: { content?: string | null, locale?: string | null, name: string } | null }> } | null, cover?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null } | null } | null } | null };
 
 export type ServicesQueryVariables = Exact<{
   locale?: InputMaybe<Scalars['I18NLocaleCode']>;
@@ -65,7 +65,7 @@ export type ServicesQueryVariables = Exact<{
 }>;
 
 
-export type ServicesQuery = { services?: { data: Array<{ id?: string | null, attributes?: { name: string, slug: string, content?: string | null, cover?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null } | null }> } | null };
+export type ServicesQuery = { services?: { data: Array<{ id?: string | null, attributes?: { name: string, slug: string, content?: string | null, locale?: string | null, localizations?: { data: Array<{ id?: string | null, attributes?: { content?: string | null, locale?: string | null, name: string } | null }> } | null, cover?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null } | null }> } | null };
 
 export type TranslationsQueryVariables = Exact<{
   locale?: InputMaybe<Scalars['I18NLocaleCode']>;
@@ -161,6 +161,17 @@ export const ServiceProps = gql`
   name
   slug
   content
+  locale
+  localizations {
+    data {
+      id
+      attributes {
+        content
+        locale
+        name
+      }
+    }
+  }
   cover {
     data {
       ...File
@@ -454,7 +465,7 @@ export const TranslationsDocument = gql`
     data {
       id
       attributes {
-        entry {
+        entry(pagination: {limit: 100}) {
           ...Entry
         }
       }

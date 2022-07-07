@@ -1,11 +1,11 @@
 import { Card, Divider, List, Typography } from 'antd'
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import Markdown from 'react-markdown'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useApp } from 'src/components/app'
 import { Content } from 'src/components/layout'
 import { Page } from 'src/components/page'
-import { ServicesComponent } from 'src/graphql'
+import { ServiceComponent, ServicesComponent, useServicesQuery } from 'src/graphql'
 
 const Service: FC = () => {
   const { i18n } = useApp()
@@ -14,12 +14,15 @@ const Service: FC = () => {
 
   return (
     <Page>
-      <ServicesComponent variables={{ locale: i18n.locale }}>
+      <ServicesComponent>
         {({ data, loading }) => {
-          const service = data?.services?.data?.find(it => it?.attributes?.slug === slug)?.attributes
+          const service =
+            i18n?.locale === 'ru'
+              ? data?.services?.data?.find(it => it?.attributes?.slug === slug)?.attributes
+              : data?.services?.data?.find(it => it?.attributes?.slug === slug)?.attributes?.localizations?.data?.[0].attributes
           return service ? (
             <Content centered={false}>
-              {service.content && <Markdown>{service.content}</Markdown>}
+              {service.content && <Markdown>{service?.content}</Markdown>}
               <Divider />
               <List
                 split={false}

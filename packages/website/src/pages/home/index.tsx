@@ -31,7 +31,7 @@ const Home: FC = () => {
               <Card
                 bordered={false}
                 cover={
-                  <Row style={{ padding: 40 }} align={'middle'} justify={'center'}>
+                  <Row style={{ padding: 24 }} align={'middle'} justify={'center'}>
                     <Col>
                       <Avatar src={it?.media?.data?.attributes?.url} size={96} shape={'square'} />
                     </Col>
@@ -88,10 +88,7 @@ const Home: FC = () => {
               renderItem={it => (
                 <List.Item key={it?.id} style={{ cursor: 'pointer' }} onClick={() => navigate(`/posts/${it?.attributes?.slug}`)}>
                   <Card bordered={false} cover={<img alt={it?.attributes?.name ?? ''} src={it?.attributes?.cover?.data?.attributes?.url} />}>
-                    <Card.Meta
-                      title={<Typography.Title level={5}>{it?.attributes?.name}</Typography.Title>}
-                      description={<Markdown>{it?.attributes?.teaser ?? ''}</Markdown>}
-                    />
+                    <Card.Meta title={<Typography.Title level={5}>{}</Typography.Title>} description={<Markdown>{it?.attributes?.teaser ?? ''}</Markdown>} />
                   </Card>
                 </List.Item>
               )}

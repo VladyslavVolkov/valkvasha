@@ -1,11 +1,13 @@
+import './index.less'
+
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import { ConfigProvider } from 'antd'
-import { createContext, Dispatch, FC, SetStateAction, useContext, VFC } from 'react'
+import {createContext, Dispatch, FC, PropsWithChildren, ReactNode, SetStateAction, useContext, useEffect, useState, VFC} from 'react'
 import { IntlProvider } from 'react-intl'
 import { BrowserRouter } from 'react-router-dom'
 import { useLocalStorage, useToggle } from 'react-use'
+import {useTranslationsQuery} from "src/graphql";
 import Pages from 'src/pages'
-import './index.less'
 
 type Locale = Scalars['I18NLocaleCode']
 
@@ -15,13 +17,13 @@ type AppProps = {
 }
 
 const defaultValue: AppProps = {
-  i18n: { locale: 'ru', setLocale: () => undefined },
+  i18n: { locale: 'uk', setLocale: () => undefined },
   burger: { opened: false, toggle: () => undefined },
 }
 
 const Context = createContext<AppProps>(defaultValue)
 
-const ContextProvider: FC = ({ children }) => {
+const ContextProvider: FC<PropsWithChildren<Partial<ReactNode>>> = ({ children }) => {
   const [locale, setLocale] = useLocalStorage<Locale>('locale', defaultValue.i18n.locale)
   const [opened, toggle] = useToggle(false)
 
@@ -40,17 +42,19 @@ const ContextProvider: FC = ({ children }) => {
 
 const client = new ApolloClient({
   uri: '/graphql',
-  queryDeduplication: true,
   connectToDevTools: import.meta.env.DEV,
-  cache: new InMemoryCache({ resultCaching: import.meta.env.PROD }),
+  cache: new InMemoryCache({ }),
 })
 
-const LocaleProvider: FC = ({ children }) => {
+const LocaleProvider: FC<PropsWithChildren<Partial<ReactNode>>> = ({ children }) => {
   const {
     i18n: { locale },
   } = useApp()
+  const {data} = useTranslationsQuery({variables:{locale}})
+  const [messages, setMessages] = useState({})
+  useEffect(()=> {setMessages(data?.translation?.data?.attributes?.entry?.reduce((all, one) => ({ ...all, ...(one ? { [one.key as string] : one.value } : {}) }), {}) ?? {})}, [data,locale])
   return (
-    <IntlProvider defaultLocale={defaultValue.i18n.locale} locale={locale}>
+    <IntlProvider defaultLocale={defaultValue.i18n.locale} locale={locale} messages={messages}>
       <ConfigProvider space={{ size: 'large' }} componentSize={'large'} locale={{ locale }}>
         {children}
       </ConfigProvider>
@@ -58,7 +62,7 @@ const LocaleProvider: FC = ({ children }) => {
   )
 }
 
-const App: VFC = () => (
+const App: FC = () => (
   <ApolloProvider client={client}>
     <ContextProvider>
       <BrowserRouter>

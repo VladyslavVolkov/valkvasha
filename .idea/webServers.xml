@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="eb83f0d0-446a-4b4a-8026-9d6185b9db40" name="valkvasha.hiberbee.live" url="http://valkvasha.hiberbee.live">
+        <fileTransfer rootFolder="/home/valkvasha/workspace" accessType="SFTP" host="valkvasha.hiberbee.live" port="22" sshConfigId="23516ecd-d1d9-4913-a3ac-fa8af73ca8e1" sshConfig="root@valkvasha.hiberbee.live:22 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
