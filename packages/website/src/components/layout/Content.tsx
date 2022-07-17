@@ -2,7 +2,7 @@ import './Content.less'
 
 import { Layout } from 'antd'
 import classnames from 'classnames'
-import {CSSProperties, FC, PropsWithChildren} from 'react'
+import { CSSProperties, FC, PropsWithChildren } from 'react'
 
 type ContentProps = { fixed: boolean; centered: boolean; style: CSSProperties }
 

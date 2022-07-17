@@ -4,6 +4,33 @@
   "type": "public",
   "permissions": [
     {
+      "action": "api::contact.contact.create"
+    },
+    {
+      "action": "api::post.post.find"
+    },
+    {
+      "action": "api::post.post.findOne"
+    },
+    {
+      "action": "api::service.service.find"
+    },
+    {
+      "action": "api::service.service.findOne"
+    },
+    {
+      "action": "api::translation.translation.find"
+    },
+    {
+      "action": "api::website.website.find"
+    },
+    {
+      "action": "plugin::i18n.locales.listLocales"
+    },
+    {
+      "action": "plugin::slugify.slugController.findSlug"
+    },
+    {
       "action": "plugin::users-permissions.auth.callback"
     },
     {

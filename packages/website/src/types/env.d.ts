@@ -14,6 +14,7 @@ type PayButton = {
   setResponseUrl(url: string): void
   setHost(url: string): void
   getUrl(): string
+  setOriginUrl(url: string): void
   addField(options: { label: string; name: string; required: boolean; readonly?: boolean })
 }
 

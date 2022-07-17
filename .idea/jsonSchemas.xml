@@ -3,6 +3,15 @@
   <component name="JsonSchemaMappingsProjectConfiguration">
     <state>
       <map>
+        <entry key="Common types for all schemas">
+          <value>
+            <SchemaInfo>
+              <option name="generatedName" value="New Schema" />
+              <option name="name" value="Common types for all schemas" />
+              <option name="relativePathToSchema" value="https://json.schemastore.org/base.json" />
+            </SchemaInfo>
+          </value>
+        </entry>
         <entry key="package">
           <value>
             <SchemaInfo>
@@ -13,6 +22,22 @@
                 <list>
                   <Item>
                     <option name="path" value="packages/cms-template/template.json" />
+                  </Item>
+                </list>
+              </option>
+            </SchemaInfo>
+          </value>
+        </entry>
+        <entry key="skaffold.yaml">
+          <value>
+            <SchemaInfo>
+              <option name="name" value="skaffold.yaml" />
+              <option name="relativePathToSchema" value="https://raw.githubusercontent.com/GoogleContainerTools/skaffold/master/docs/content/en/schemas/v2beta28.json" />
+              <option name="applicationDefined" value="true" />
+              <option name="patterns">
+                <list>
+                  <Item>
+                    <option name="path" value="skaffold.yaml" />
                   </Item>
                 </list>
               </option>

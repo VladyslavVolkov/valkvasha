@@ -7,8 +7,8 @@
       "filterable": true,
       "searchable": true,
       "pageSize": 10,
-      "mainField": "id",
-      "defaultSortBy": "id",
+      "mainField": "pathname",
+      "defaultSortBy": "pathname",
       "defaultSortOrder": "ASC"
     },
     "metadatas": {
@@ -20,16 +20,100 @@
           "sortable": false
         }
       },
-      "hero": {
+      "pathname": {
         "edit": {
-          "label": "Hero",
+          "label": "Pathname",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "Hero",
+          "label": "Pathname",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "section1": {
+        "edit": {
+          "label": "section1",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "section1",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "section2": {
+        "edit": {
+          "label": "section2",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "section2",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "section3": {
+        "edit": {
+          "label": "section3",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "section3",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "section4": {
+        "edit": {
+          "label": "section4",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "section4",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "section5": {
+        "edit": {
+          "label": "section5",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "section5",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "section6": {
+        "edit": {
+          "label": "section6",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "section6",
           "searchable": false,
           "sortable": false
         }
@@ -37,12 +121,51 @@
     },
     "layouts": {
       "list": [
-        "id"
+        "id",
+        "pathname",
+        "section2",
+        "section3"
       ],
       "edit": [
         [
           {
-            "name": "hero",
+            "name": "pathname",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "section1",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "section2",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "section3",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "section4",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "section5",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "section6",
             "size": 12
           }
         ]

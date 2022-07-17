@@ -427,6 +427,8 @@ input UploadFileFiltersInput {
   previewUrl: StringFilterInput
   provider: StringFilterInput
   provider_metadata: JSONFilterInput
+  folder: UploadFolderFiltersInput
+  folderPath: StringFilterInput
   createdAt: DateTimeFilterInput
   updatedAt: DateTimeFilterInput
   sitemap_exclude: BooleanFilterInput
@@ -450,6 +452,8 @@ input UploadFileInput {
   previewUrl: String
   provider: String
   provider_metadata: JSON
+  folder: ID
+  folderPath: String
   sitemap_exclude: Boolean
 }
 
@@ -485,6 +489,65 @@ type UploadFileEntityResponse {
 type UploadFileEntityResponseCollection {
   data: [UploadFileEntity!]!
   meta: ResponseCollectionMeta!
+}
+
+type UploadFileRelationResponseCollection {
+  data: [UploadFileEntity!]!
+}
+
+input UploadFolderFiltersInput {
+  id: IDFilterInput
+  name: StringFilterInput
+  pathId: IntFilterInput
+  parent: UploadFolderFiltersInput
+  children: UploadFolderFiltersInput
+  files: UploadFileFiltersInput
+  path: StringFilterInput
+  createdAt: DateTimeFilterInput
+  updatedAt: DateTimeFilterInput
+  sitemap_exclude: BooleanFilterInput
+  and: [UploadFolderFiltersInput]
+  or: [UploadFolderFiltersInput]
+  not: UploadFolderFiltersInput
+}
+
+input UploadFolderInput {
+  name: String
+  pathId: Int
+  parent: ID
+  children: [ID]
+  files: [ID]
+  path: String
+  sitemap_exclude: Boolean
+}
+
+type UploadFolder {
+  name: String!
+  pathId: Int!
+  parent: UploadFolderEntityResponse
+  children(filters: UploadFolderFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFolderRelationResponseCollection
+  files(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
+  path: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type UploadFolderEntity {
+  id: ID
+  attributes: UploadFolder
+}
+
+type UploadFolderEntityResponse {
+  data: UploadFolderEntity
+}
+
+type UploadFolderEntityResponseCollection {
+  data: [UploadFolderEntity!]!
+  meta: ResponseCollectionMeta!
+}
+
+type UploadFolderRelationResponseCollection {
+  data: [UploadFolderEntity!]!
 }
 
 input EntityNotesNoteFiltersInput {
@@ -755,6 +818,110 @@ type EmailDesignerEmailTemplateEntityResponseCollection {
   meta: ResponseCollectionMeta!
 }
 
+input MenusMenuFiltersInput {
+  id: IDFilterInput
+  title: StringFilterInput
+  slug: StringFilterInput
+  items: MenusMenuItemFiltersInput
+  createdAt: DateTimeFilterInput
+  updatedAt: DateTimeFilterInput
+  sitemap_exclude: BooleanFilterInput
+  and: [MenusMenuFiltersInput]
+  or: [MenusMenuFiltersInput]
+  not: MenusMenuFiltersInput
+}
+
+input MenusMenuInput {
+  title: String
+  slug: String
+  items: [ID]
+  sitemap_exclude: Boolean
+}
+
+type MenusMenu {
+  title: String!
+  slug: String!
+  items(filters: MenusMenuItemFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): MenusMenuItemRelationResponseCollection
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type MenusMenuEntity {
+  id: ID
+  attributes: MenusMenu
+}
+
+type MenusMenuEntityResponse {
+  data: MenusMenuEntity
+}
+
+type MenusMenuEntityResponseCollection {
+  data: [MenusMenuEntity!]!
+  meta: ResponseCollectionMeta!
+}
+
+enum ENUM_MENUSMENUITEM_TARGET {
+  blank
+  parent
+  self
+  top
+}
+
+input MenusMenuItemFiltersInput {
+  id: IDFilterInput
+  order: IntFilterInput
+  title: StringFilterInput
+  url: StringFilterInput
+  target: StringFilterInput
+  root_menu: MenusMenuFiltersInput
+  parent: MenusMenuItemFiltersInput
+  createdAt: DateTimeFilterInput
+  updatedAt: DateTimeFilterInput
+  sitemap_exclude: BooleanFilterInput
+  and: [MenusMenuItemFiltersInput]
+  or: [MenusMenuItemFiltersInput]
+  not: MenusMenuItemFiltersInput
+}
+
+input MenusMenuItemInput {
+  order: Int
+  title: String
+  url: String
+  target: ENUM_MENUSMENUITEM_TARGET
+  root_menu: ID
+  parent: ID
+  sitemap_exclude: Boolean
+}
+
+type MenusMenuItem {
+  order: Int
+  title: String!
+  url: String
+  target: ENUM_MENUSMENUITEM_TARGET
+  root_menu: MenusMenuEntityResponse!
+  parent: MenusMenuItemEntityResponse
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type MenusMenuItemEntity {
+  id: ID
+  attributes: MenusMenuItem
+}
+
+type MenusMenuItemEntityResponse {
+  data: MenusMenuItemEntity
+}
+
+type MenusMenuItemEntityResponseCollection {
+  data: [MenusMenuItemEntity!]!
+  meta: ResponseCollectionMeta!
+}
+
+type MenusMenuItemRelationResponseCollection {
+  data: [MenusMenuItemEntity!]!
+}
+
 enum ENUM_CONTACT_STATUS {
   new
   sent
@@ -985,7 +1152,7 @@ type WebsiteRelationResponseCollection {
   data: [WebsiteEntity!]!
 }
 
-union GenericMorph = ComponentDataEntry | ComponentDataSet | ComponentPageAbout | ComponentPageContactUs | ComponentPageHome | ComponentSharedMetaSocial | ComponentSharedSeo | ComponentUiCard | ComponentUiContact | ComponentUiGrid | ComponentUiHeadline | ComponentUiLink | ComponentUiMenu | ComponentUiParagraph | ComponentUiSection | ComponentUiTab | ComponentUiText | UploadFile | EntityNotesNote | I18NLocale | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | EmailDesignerEmailTemplate | Contact | Post | Service | Translation | Website
+union GenericMorph = ComponentDataEntry | ComponentDataSet | ComponentPageAbout | ComponentPageContactUs | ComponentPageHome | ComponentSharedMetaSocial | ComponentSharedSeo | ComponentUiCard | ComponentUiContact | ComponentUiGrid | ComponentUiHeadline | ComponentUiLink | ComponentUiMenu | ComponentUiParagraph | ComponentUiSection | ComponentUiTab | ComponentUiText | UploadFile | UploadFolder | EntityNotesNote | I18NLocale | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | EmailDesignerEmailTemplate | MenusMenu | MenusMenuItem | Contact | Post | Service | Translation | Website
 
 input FileInfoInput {
   name: String
@@ -1058,6 +1225,8 @@ input PaginationArg {
 type Query {
   uploadFile(id: ID): UploadFileEntityResponse
   uploadFiles(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileEntityResponseCollection
+  uploadFolder(id: ID): UploadFolderEntityResponse
+  uploadFolders(filters: UploadFolderFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFolderEntityResponseCollection
   entityNotesNote(id: ID): EntityNotesNoteEntityResponse
   entityNotesNotes(filters: EntityNotesNoteFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): EntityNotesNoteEntityResponseCollection
   i18NLocale(id: ID): I18NLocaleEntityResponse
@@ -1068,6 +1237,10 @@ type Query {
   usersPermissionsUsers(filters: UsersPermissionsUserFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UsersPermissionsUserEntityResponseCollection
   emailDesignerEmailTemplate(id: ID): EmailDesignerEmailTemplateEntityResponse
   emailDesignerEmailTemplates(filters: EmailDesignerEmailTemplateFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): EmailDesignerEmailTemplateEntityResponseCollection
+  menusMenu(id: ID): MenusMenuEntityResponse
+  menusMenus(filters: MenusMenuFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): MenusMenuEntityResponseCollection
+  menusMenuItem(id: ID): MenusMenuItemEntityResponse
+  menusMenuItems(filters: MenusMenuItemFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): MenusMenuItemEntityResponseCollection
   contact(id: ID): ContactEntityResponse
   contacts(filters: ContactFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): ContactEntityResponseCollection
   post(id: ID, locale: I18NLocaleCode): PostEntityResponse
@@ -1084,17 +1257,34 @@ type Mutation {
   createUploadFile(data: UploadFileInput!): UploadFileEntityResponse
   updateUploadFile(id: ID!, data: UploadFileInput!): UploadFileEntityResponse
   deleteUploadFile(id: ID!): UploadFileEntityResponse
+  createUploadFolder(data: UploadFolderInput!): UploadFolderEntityResponse
+  updateUploadFolder(id: ID!, data: UploadFolderInput!): UploadFolderEntityResponse
+  deleteUploadFolder(id: ID!): UploadFolderEntityResponse
   createEntityNotesNote(data: EntityNotesNoteInput!): EntityNotesNoteEntityResponse
   updateEntityNotesNote(id: ID!, data: EntityNotesNoteInput!): EntityNotesNoteEntityResponse
   deleteEntityNotesNote(id: ID!): EntityNotesNoteEntityResponse
   createEmailDesignerEmailTemplate(data: EmailDesignerEmailTemplateInput!): EmailDesignerEmailTemplateEntityResponse
   updateEmailDesignerEmailTemplate(id: ID!, data: EmailDesignerEmailTemplateInput!): EmailDesignerEmailTemplateEntityResponse
   deleteEmailDesignerEmailTemplate(id: ID!): EmailDesignerEmailTemplateEntityResponse
+  createMenusMenu(data: MenusMenuInput!): MenusMenuEntityResponse
+  updateMenusMenu(id: ID!, data: MenusMenuInput!): MenusMenuEntityResponse
+  deleteMenusMenu(id: ID!): MenusMenuEntityResponse
+  createMenusMenuItem(data: MenusMenuItemInput!): MenusMenuItemEntityResponse
+  updateMenusMenuItem(id: ID!, data: MenusMenuItemInput!): MenusMenuItemEntityResponse
+  deleteMenusMenuItem(id: ID!): MenusMenuItemEntityResponse
   createContact(data: ContactInput!): ContactEntityResponse
   updateContact(id: ID!, data: ContactInput!): ContactEntityResponse
   deleteContact(id: ID!): ContactEntityResponse
+  createPost(data: PostInput!, locale: I18NLocaleCode): PostEntityResponse
+  updatePost(id: ID!, data: PostInput!, locale: I18NLocaleCode): PostEntityResponse
+  deletePost(id: ID!, locale: I18NLocaleCode): PostEntityResponse
+  createService(data: ServiceInput!, locale: I18NLocaleCode): ServiceEntityResponse
+  updateService(id: ID!, data: ServiceInput!, locale: I18NLocaleCode): ServiceEntityResponse
+  deleteService(id: ID!, locale: I18NLocaleCode): ServiceEntityResponse
   updateTranslation(data: TranslationInput!, locale: I18NLocaleCode): TranslationEntityResponse
   deleteTranslation(locale: I18NLocaleCode): TranslationEntityResponse
+  updateWebsite(data: WebsiteInput!, locale: I18NLocaleCode): WebsiteEntityResponse
+  deleteWebsite(locale: I18NLocaleCode): WebsiteEntityResponse
   upload(refId: ID, ref: String, field: String, info: FileInfoInput, file: Upload!): UploadFileEntityResponse!
   multipleUpload(refId: ID, ref: String, field: String, files: [Upload]!): [UploadFileEntityResponse]!
   updateFileInfo(id: ID!, info: FileInfoInput): UploadFileEntityResponse!

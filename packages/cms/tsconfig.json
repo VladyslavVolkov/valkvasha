@@ -1,8 +1,20 @@
 {
+  "extends": "@strapi/typescript-utils/tsconfigs/server",
   "compilerOptions": {
-    "baseUrl": ".",
-    "incremental": true,
-    "target": "ES5"
+    "outDir": "dist",
+    "rootDir": ".",
+    "lib": ["DOM", "ES2020"],
+    "resolveJsonModule": true
   },
-  "include": ["config"]
+  "include": ["./", "src/**/*.json", "package.json"],
+  "exclude": [
+    "node_modules/",
+    "build/",
+    "dist/",
+    ".cache/",
+    ".tmp/",
+    "src/admin/",
+    "**/*.test.ts",
+    "src/plugins/**"
+  ]
 }

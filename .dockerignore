@@ -1,0 +1,16 @@
+.git*
+.idea
+.editorconfig
+.graphqlconfig
+sonar-project.properties
+helmfile.*
+**/.terraform
+**/.cache
+**/.eslintcache
+**/.strapi-updater.json
+**/build
+**/dist
+**/node_modules
+**/*.md
+**/LICENSE
+**/*.iml

@@ -1,18 +1,19 @@
 import './DefaultLayout.less'
 
 import { Col, Drawer, Layout, Row, Spin } from 'antd'
-import { Suspense, useEffect, VFC } from 'react'
+import { FC, Suspense } from 'react'
 import { Outlet } from 'react-router'
-import { generatePath, Link, useLocation } from 'react-router-dom'
-import { AppContext, useApp } from 'src/components/app'
+import { generatePath, ScrollRestoration, useLocation } from 'react-router-dom'
+import { AppContext } from 'src/components/app'
 import { TopMenu } from 'src/components/menu/Navigation'
 import { useTranslationsQuery, WebsiteComponent } from 'src/graphql'
 
+import { useLocale } from '../app/I18n'
 import { Content } from './Content'
 import { Footer } from './Footer'
 import { Header } from './Header'
 
-const PageLoader: VFC = () => (
+const PageLoader: FC = () => (
   <Row style={{ margin: '0 auto', minHeight: 'calc(100vh - 256px)', height: '100%', width: '100%' }} align={'middle'} justify={'center'}>
     <Col span={24}>
       <Spin size={'small'} />
@@ -28,25 +29,19 @@ const topNavigation = [
   { id: 'contacts', url: generatePath('/contacts') },
 ]
 
-const DefaultLayout: VFC = () => {
-  const {
-    i18n: { locale },
-  } = useApp()
+const DefaultLayout: FC = () => {
+  const { locale } = useLocale()
 
   const { pathname } = useLocation()
   const { data } = useTranslationsQuery({ variables: { locale } })
   const menu: Maybe<EntryFragment>[] = data?.translation?.data?.attributes?.entry.filter(it => it?.key?.startsWith('top-navigation.')) ?? []
   const header: Maybe<EntryFragment>[] = data?.translation?.data?.attributes?.entry.filter(it => it?.key?.startsWith('header.')) ?? []
 
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [pathname])
-
   return (
     <AppContext.Consumer>
       {({ burger: { opened, toggle } }) => (
         <Layout>
-          <Layout.Header style={{ lineHeight: 'unset' }}>
+          <Layout.Header style={{ lineHeight: 'unset', height: 'unset' }}>
             <Content>
               <Header data={header} />
             </Content>
@@ -88,10 +83,11 @@ const DefaultLayout: VFC = () => {
             </Content>
           </Layout.Footer>
           <Drawer width={'50%'} height={'100%'} onClose={toggle} visible={opened} />
+          <ScrollRestoration />
         </Layout>
       )}
     </AppContext.Consumer>
   )
 }
 
-export { DefaultLayout as default }
+export { DefaultLayout }

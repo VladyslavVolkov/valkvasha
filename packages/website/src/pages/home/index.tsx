@@ -3,12 +3,13 @@ import { FC } from 'react'
 import Markdown from 'react-markdown'
 import { useNavigate, useOutletContext } from 'react-router-dom'
 import { useApp } from 'src/components/app'
+import { useLocale } from 'src/components/app/I18n'
 import { Content } from 'src/components/layout'
 import { Headline, Hero } from 'src/components/section'
 import { PostsComponent, ServicesComponent } from 'src/graphql'
 
 const Home: FC = () => {
-  const { i18n } = useApp()
+  const { locale } = useLocale()
   const props = useOutletContext<HomeFragment>()
   const navigate = useNavigate()
   return (
@@ -49,7 +50,7 @@ const Home: FC = () => {
         />
       </Content>
       <Content>
-        <ServicesComponent variables={{ locale: i18n.locale }}>
+        <ServicesComponent variables={{ locale }}>
           {({ data, loading }) => (
             <List
               split={false}
@@ -76,7 +77,7 @@ const Home: FC = () => {
         ))}
       </Content>
       <Content centered={false}>
-        <PostsComponent variables={{ pagination: { limit: 3 }, locale: i18n.locale, sort: ['id:DESC'] }}>
+        <PostsComponent variables={{ pagination: { limit: 3 }, locale, sort: ['id:DESC'] }}>
           {({ data, loading }) => (
             <List
               header={<Headline title={props?.section6?.title} />}
@@ -84,11 +85,23 @@ const Home: FC = () => {
               size={'large'}
               grid={{ column: 3, xs: 1, sm: 1, md: 2, lg: 2, xl: 3 }}
               itemLayout={'horizontal'}
-              dataSource={data?.posts?.data ?? []}
+              dataSource={data?.posts?.data}
               renderItem={it => (
                 <List.Item key={it?.id} style={{ cursor: 'pointer' }} onClick={() => navigate(`/posts/${it?.attributes?.slug}`)}>
-                  <Card bordered={false} cover={<img alt={it?.attributes?.name ?? ''} src={it?.attributes?.cover?.data?.attributes?.url} />}>
-                    <Card.Meta title={<Typography.Title level={5}>{}</Typography.Title>} description={<Markdown>{it?.attributes?.teaser ?? ''}</Markdown>} />
+                  <Card
+                    bordered={false}
+                    cover={
+                      <img
+                        style={{ objectFit: 'cover', objectPosition: 'top center', height: '320px' }}
+                        alt={it?.attributes?.name ?? ''}
+                        src={it?.attributes?.cover?.data?.attributes?.url}
+                      />
+                    }
+                  >
+                    <Card.Meta
+                      title={<Typography.Title level={5}>{it.attributes?.name}</Typography.Title>}
+                      description={<Markdown>{it?.attributes?.teaser ?? ''}</Markdown>}
+                    />
                   </Card>
                 </List.Item>
               )}

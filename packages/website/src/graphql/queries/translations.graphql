@@ -1,9 +1,20 @@
-query translations($locale: I18NLocaleCode = "ru") {
+query translations($locale: I18NLocaleCode = "uk") {
   translation(locale: $locale) {
     data {
       id
       attributes {
-        entry(pagination: { limit: 100}) {
+        localizations {
+          data {
+            attributes {
+              locale
+              entry(pagination: { limit: 100 }) {
+                ...Entry
+              }
+            }
+          }
+        }
+        locale
+        entry(pagination: { limit: 100 }) {
           ...Entry
         }
       }

@@ -14,14 +14,15 @@ const Hero: VFC<Partial<CardFragment>> = ({ title = '', subtitle = '', media, de
         minHeight: 600,
         padding: '100px 0',
         backgroundImage: media?.data?.attributes?.url ? `url(${media.data.attributes.url})` : undefined,
-        backgroundPosition: 'top',
+        backgroundPositionY: 'top',
+        backgroundPositionX: 'right',
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
       }}
     >
       <Content>
-        <Col span={12}>
-          <Row gutter={[0, 24]} justify={'center'} align={'middle'}>
+        <Col xs={24} sm={24} md={12}>
+          <Row gutter={[24, 24]} justify={'center'} align={'middle'}>
             <Col span={24} style={{ textAlign: 'center' }}>
               <Typography.Title level={2}>{title}</Typography.Title>
             </Col>

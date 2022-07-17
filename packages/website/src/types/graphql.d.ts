@@ -15,7 +15,7 @@ type Scalars = {
   /** A string used to identify an i18n locale */
   I18NLocaleCode: 'ru'|'uk';
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
-  JSON: Record<string, Record<string|unknown>|Array|String|Number|Boolean|null|undefined>;
+  JSON: Record<string, any>|any[]|string|number|boolean|null|undefined;
   /** The `Upload` scalar type represents a file upload. */
   Upload: unknown;
   WebsiteContentDynamicZoneInput: any;
@@ -400,6 +400,12 @@ type Enum_Contact_Status =
   | 'new'
   | 'sent';
 
+type Enum_Menusmenuitem_Target =
+  | 'blank'
+  | 'parent'
+  | 'self'
+  | 'top';
+
 type EmailDesignerEmailTemplate = {
   bodyHtml?: Maybe<Scalars['String']>;
   bodyText?: Maybe<Scalars['String']>;
@@ -539,7 +545,7 @@ type FloatFilterInput = {
   startsWith?: InputMaybe<Scalars['Float']>;
 };
 
-type GenericMorph = ComponentDataEntry | ComponentDataSet | ComponentPageAbout | ComponentPageContactUs | ComponentPageHome | ComponentSharedMetaSocial | ComponentSharedSeo | ComponentUiCard | ComponentUiContact | ComponentUiGrid | ComponentUiHeadline | ComponentUiLink | ComponentUiMenu | ComponentUiParagraph | ComponentUiSection | ComponentUiTab | ComponentUiText | Contact | EmailDesignerEmailTemplate | EntityNotesNote | I18NLocale | Post | Service | Translation | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Website;
+type GenericMorph = ComponentDataEntry | ComponentDataSet | ComponentPageAbout | ComponentPageContactUs | ComponentPageHome | ComponentSharedMetaSocial | ComponentSharedSeo | ComponentUiCard | ComponentUiContact | ComponentUiGrid | ComponentUiHeadline | ComponentUiLink | ComponentUiMenu | ComponentUiParagraph | ComponentUiSection | ComponentUiTab | ComponentUiText | Contact | EmailDesignerEmailTemplate | EntityNotesNote | I18NLocale | MenusMenu | MenusMenuItem | Post | Service | Translation | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Website;
 
 type I18NLocale = {
   code?: Maybe<Scalars['String']>;
@@ -642,14 +648,123 @@ type JsonFilterInput = {
   startsWith?: InputMaybe<Scalars['JSON']>;
 };
 
+type MenusMenu = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  items?: Maybe<MenusMenuItemRelationResponseCollection>;
+  slug: Scalars['String'];
+  title: Scalars['String'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+
+type MenusMenuItemsArgs = {
+  filters?: InputMaybe<MenusMenuItemFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+type MenusMenuEntity = {
+  attributes?: Maybe<MenusMenu>;
+  id?: Maybe<Scalars['ID']>;
+};
+
+type MenusMenuEntityResponse = {
+  data?: Maybe<MenusMenuEntity>;
+};
+
+type MenusMenuEntityResponseCollection = {
+  data: Array<MenusMenuEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+type MenusMenuFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<MenusMenuFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  items?: InputMaybe<MenusMenuItemFiltersInput>;
+  not?: InputMaybe<MenusMenuFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<MenusMenuFiltersInput>>>;
+  sitemap_exclude?: InputMaybe<BooleanFilterInput>;
+  slug?: InputMaybe<StringFilterInput>;
+  title?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+type MenusMenuInput = {
+  items?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  sitemap_exclude?: InputMaybe<Scalars['Boolean']>;
+  slug?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']>;
+};
+
+type MenusMenuItem = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  order?: Maybe<Scalars['Int']>;
+  parent?: Maybe<MenusMenuItemEntityResponse>;
+  root_menu: MenusMenuEntityResponse;
+  target?: Maybe<Enum_Menusmenuitem_Target>;
+  title: Scalars['String'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  url?: Maybe<Scalars['String']>;
+};
+
+type MenusMenuItemEntity = {
+  attributes?: Maybe<MenusMenuItem>;
+  id?: Maybe<Scalars['ID']>;
+};
+
+type MenusMenuItemEntityResponse = {
+  data?: Maybe<MenusMenuItemEntity>;
+};
+
+type MenusMenuItemEntityResponseCollection = {
+  data: Array<MenusMenuItemEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+type MenusMenuItemFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<MenusMenuItemFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  not?: InputMaybe<MenusMenuItemFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<MenusMenuItemFiltersInput>>>;
+  order?: InputMaybe<IntFilterInput>;
+  parent?: InputMaybe<MenusMenuItemFiltersInput>;
+  root_menu?: InputMaybe<MenusMenuFiltersInput>;
+  sitemap_exclude?: InputMaybe<BooleanFilterInput>;
+  target?: InputMaybe<StringFilterInput>;
+  title?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+  url?: InputMaybe<StringFilterInput>;
+};
+
+type MenusMenuItemInput = {
+  order?: InputMaybe<Scalars['Int']>;
+  parent?: InputMaybe<Scalars['ID']>;
+  root_menu?: InputMaybe<Scalars['ID']>;
+  sitemap_exclude?: InputMaybe<Scalars['Boolean']>;
+  target?: InputMaybe<Enum_Menusmenuitem_Target>;
+  title?: InputMaybe<Scalars['String']>;
+  url?: InputMaybe<Scalars['String']>;
+};
+
+type MenusMenuItemRelationResponseCollection = {
+  data: Array<MenusMenuItemEntity>;
+};
+
 type Mutation = {
   createContact?: Maybe<ContactEntityResponse>;
   createEmailDesignerEmailTemplate?: Maybe<EmailDesignerEmailTemplateEntityResponse>;
   createEntityNotesNote?: Maybe<EntityNotesNoteEntityResponse>;
+  createMenusMenu?: Maybe<MenusMenuEntityResponse>;
+  createMenusMenuItem?: Maybe<MenusMenuItemEntityResponse>;
+  createPost?: Maybe<PostEntityResponse>;
   createPostLocalization?: Maybe<PostEntityResponse>;
+  createService?: Maybe<ServiceEntityResponse>;
   createServiceLocalization?: Maybe<ServiceEntityResponse>;
   createTranslationLocalization?: Maybe<TranslationEntityResponse>;
   createUploadFile?: Maybe<UploadFileEntityResponse>;
+  createUploadFolder?: Maybe<UploadFolderEntityResponse>;
   /** Create a new role */
   createUsersPermissionsRole?: Maybe<UsersPermissionsCreateRolePayload>;
   /** Create a new user */
@@ -658,12 +773,18 @@ type Mutation = {
   deleteContact?: Maybe<ContactEntityResponse>;
   deleteEmailDesignerEmailTemplate?: Maybe<EmailDesignerEmailTemplateEntityResponse>;
   deleteEntityNotesNote?: Maybe<EntityNotesNoteEntityResponse>;
+  deleteMenusMenu?: Maybe<MenusMenuEntityResponse>;
+  deleteMenusMenuItem?: Maybe<MenusMenuItemEntityResponse>;
+  deletePost?: Maybe<PostEntityResponse>;
+  deleteService?: Maybe<ServiceEntityResponse>;
   deleteTranslation?: Maybe<TranslationEntityResponse>;
   deleteUploadFile?: Maybe<UploadFileEntityResponse>;
+  deleteUploadFolder?: Maybe<UploadFolderEntityResponse>;
   /** Delete an existing role */
   deleteUsersPermissionsRole?: Maybe<UsersPermissionsDeleteRolePayload>;
   /** Delete an existing user */
   deleteUsersPermissionsUser: UsersPermissionsUserEntityResponse;
+  deleteWebsite?: Maybe<WebsiteEntityResponse>;
   /** Confirm an email users email address */
   emailConfirmation?: Maybe<UsersPermissionsLoginPayload>;
   /** Request a reset password token */
@@ -679,12 +800,18 @@ type Mutation = {
   updateEmailDesignerEmailTemplate?: Maybe<EmailDesignerEmailTemplateEntityResponse>;
   updateEntityNotesNote?: Maybe<EntityNotesNoteEntityResponse>;
   updateFileInfo: UploadFileEntityResponse;
+  updateMenusMenu?: Maybe<MenusMenuEntityResponse>;
+  updateMenusMenuItem?: Maybe<MenusMenuItemEntityResponse>;
+  updatePost?: Maybe<PostEntityResponse>;
+  updateService?: Maybe<ServiceEntityResponse>;
   updateTranslation?: Maybe<TranslationEntityResponse>;
   updateUploadFile?: Maybe<UploadFileEntityResponse>;
+  updateUploadFolder?: Maybe<UploadFolderEntityResponse>;
   /** Update an existing role */
   updateUsersPermissionsRole?: Maybe<UsersPermissionsUpdateRolePayload>;
   /** Update an existing user */
   updateUsersPermissionsUser: UsersPermissionsUserEntityResponse;
+  updateWebsite?: Maybe<WebsiteEntityResponse>;
   upload: UploadFileEntityResponse;
 };
 
@@ -704,9 +831,31 @@ type MutationCreateEntityNotesNoteArgs = {
 };
 
 
+type MutationCreateMenusMenuArgs = {
+  data: MenusMenuInput;
+};
+
+
+type MutationCreateMenusMenuItemArgs = {
+  data: MenusMenuItemInput;
+};
+
+
+type MutationCreatePostArgs = {
+  data: PostInput;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
+};
+
+
 type MutationCreatePostLocalizationArgs = {
   data?: InputMaybe<PostInput>;
   id?: InputMaybe<Scalars['ID']>;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
+};
+
+
+type MutationCreateServiceArgs = {
+  data: ServiceInput;
   locale?: InputMaybe<Scalars['I18NLocaleCode']>;
 };
 
@@ -727,6 +876,11 @@ type MutationCreateTranslationLocalizationArgs = {
 
 type MutationCreateUploadFileArgs = {
   data: UploadFileInput;
+};
+
+
+type MutationCreateUploadFolderArgs = {
+  data: UploadFolderInput;
 };
 
 
@@ -762,12 +916,39 @@ type MutationDeleteEntityNotesNoteArgs = {
 };
 
 
+type MutationDeleteMenusMenuArgs = {
+  id: Scalars['ID'];
+};
+
+
+type MutationDeleteMenusMenuItemArgs = {
+  id: Scalars['ID'];
+};
+
+
+type MutationDeletePostArgs = {
+  id: Scalars['ID'];
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
+};
+
+
+type MutationDeleteServiceArgs = {
+  id: Scalars['ID'];
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
+};
+
+
 type MutationDeleteTranslationArgs = {
   locale?: InputMaybe<Scalars['I18NLocaleCode']>;
 };
 
 
 type MutationDeleteUploadFileArgs = {
+  id: Scalars['ID'];
+};
+
+
+type MutationDeleteUploadFolderArgs = {
   id: Scalars['ID'];
 };
 
@@ -779,6 +960,11 @@ type MutationDeleteUsersPermissionsRoleArgs = {
 
 type MutationDeleteUsersPermissionsUserArgs = {
   id: Scalars['ID'];
+};
+
+
+type MutationDeleteWebsiteArgs = {
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
 };
 
 
@@ -846,6 +1032,32 @@ type MutationUpdateFileInfoArgs = {
 };
 
 
+type MutationUpdateMenusMenuArgs = {
+  data: MenusMenuInput;
+  id: Scalars['ID'];
+};
+
+
+type MutationUpdateMenusMenuItemArgs = {
+  data: MenusMenuItemInput;
+  id: Scalars['ID'];
+};
+
+
+type MutationUpdatePostArgs = {
+  data: PostInput;
+  id: Scalars['ID'];
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
+};
+
+
+type MutationUpdateServiceArgs = {
+  data: ServiceInput;
+  id: Scalars['ID'];
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
+};
+
+
 type MutationUpdateTranslationArgs = {
   data: TranslationInput;
   locale?: InputMaybe<Scalars['I18NLocaleCode']>;
@@ -854,6 +1066,12 @@ type MutationUpdateTranslationArgs = {
 
 type MutationUpdateUploadFileArgs = {
   data: UploadFileInput;
+  id: Scalars['ID'];
+};
+
+
+type MutationUpdateUploadFolderArgs = {
+  data: UploadFolderInput;
   id: Scalars['ID'];
 };
 
@@ -867,6 +1085,12 @@ type MutationUpdateUsersPermissionsRoleArgs = {
 type MutationUpdateUsersPermissionsUserArgs = {
   data: UsersPermissionsUserInput;
   id: Scalars['ID'];
+};
+
+
+type MutationUpdateWebsiteArgs = {
+  data: WebsiteInput;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
 };
 
 
@@ -976,6 +1200,10 @@ type Query = {
   i18NLocale?: Maybe<I18NLocaleEntityResponse>;
   i18NLocales?: Maybe<I18NLocaleEntityResponseCollection>;
   me?: Maybe<UsersPermissionsMe>;
+  menusMenu?: Maybe<MenusMenuEntityResponse>;
+  menusMenuItem?: Maybe<MenusMenuItemEntityResponse>;
+  menusMenuItems?: Maybe<MenusMenuItemEntityResponseCollection>;
+  menusMenus?: Maybe<MenusMenuEntityResponseCollection>;
   post?: Maybe<PostEntityResponse>;
   posts?: Maybe<PostEntityResponseCollection>;
   service?: Maybe<ServiceEntityResponse>;
@@ -983,6 +1211,8 @@ type Query = {
   translation?: Maybe<TranslationEntityResponse>;
   uploadFile?: Maybe<UploadFileEntityResponse>;
   uploadFiles?: Maybe<UploadFileEntityResponseCollection>;
+  uploadFolder?: Maybe<UploadFolderEntityResponse>;
+  uploadFolders?: Maybe<UploadFolderEntityResponseCollection>;
   usersPermissionsRole?: Maybe<UsersPermissionsRoleEntityResponse>;
   usersPermissionsRoles?: Maybe<UsersPermissionsRoleEntityResponseCollection>;
   usersPermissionsUser?: Maybe<UsersPermissionsUserEntityResponse>;
@@ -1046,6 +1276,30 @@ type QueryI18NLocalesArgs = {
 };
 
 
+type QueryMenusMenuArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+
+type QueryMenusMenuItemArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+
+type QueryMenusMenuItemsArgs = {
+  filters?: InputMaybe<MenusMenuItemFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+type QueryMenusMenusArgs = {
+  filters?: InputMaybe<MenusMenuFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
 type QueryPostArgs = {
   id?: InputMaybe<Scalars['ID']>;
   locale?: InputMaybe<Scalars['I18NLocaleCode']>;
@@ -1089,6 +1343,18 @@ type QueryUploadFileArgs = {
 
 type QueryUploadFilesArgs = {
   filters?: InputMaybe<UploadFileFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+type QueryUploadFolderArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+
+type QueryUploadFoldersArgs = {
+  filters?: InputMaybe<UploadFolderFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
@@ -1292,6 +1558,8 @@ type UploadFileFiltersInput = {
   caption?: InputMaybe<StringFilterInput>;
   createdAt?: InputMaybe<DateTimeFilterInput>;
   ext?: InputMaybe<StringFilterInput>;
+  folder?: InputMaybe<UploadFolderFiltersInput>;
+  folderPath?: InputMaybe<StringFilterInput>;
   formats?: InputMaybe<JsonFilterInput>;
   hash?: InputMaybe<StringFilterInput>;
   height?: InputMaybe<IntFilterInput>;
@@ -1314,6 +1582,8 @@ type UploadFileInput = {
   alternativeText?: InputMaybe<Scalars['String']>;
   caption?: InputMaybe<Scalars['String']>;
   ext?: InputMaybe<Scalars['String']>;
+  folder?: InputMaybe<Scalars['ID']>;
+  folderPath?: InputMaybe<Scalars['String']>;
   formats?: InputMaybe<Scalars['JSON']>;
   hash?: InputMaybe<Scalars['String']>;
   height?: InputMaybe<Scalars['Int']>;
@@ -1326,6 +1596,79 @@ type UploadFileInput = {
   size?: InputMaybe<Scalars['Float']>;
   url?: InputMaybe<Scalars['String']>;
   width?: InputMaybe<Scalars['Int']>;
+};
+
+type UploadFileRelationResponseCollection = {
+  data: Array<UploadFileEntity>;
+};
+
+type UploadFolder = {
+  children?: Maybe<UploadFolderRelationResponseCollection>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  files?: Maybe<UploadFileRelationResponseCollection>;
+  name: Scalars['String'];
+  parent?: Maybe<UploadFolderEntityResponse>;
+  path: Scalars['String'];
+  pathId: Scalars['Int'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+
+type UploadFolderChildrenArgs = {
+  filters?: InputMaybe<UploadFolderFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+type UploadFolderFilesArgs = {
+  filters?: InputMaybe<UploadFileFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+type UploadFolderEntity = {
+  attributes?: Maybe<UploadFolder>;
+  id?: Maybe<Scalars['ID']>;
+};
+
+type UploadFolderEntityResponse = {
+  data?: Maybe<UploadFolderEntity>;
+};
+
+type UploadFolderEntityResponseCollection = {
+  data: Array<UploadFolderEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+type UploadFolderFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<UploadFolderFiltersInput>>>;
+  children?: InputMaybe<UploadFolderFiltersInput>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  files?: InputMaybe<UploadFileFiltersInput>;
+  id?: InputMaybe<IdFilterInput>;
+  name?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<UploadFolderFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<UploadFolderFiltersInput>>>;
+  parent?: InputMaybe<UploadFolderFiltersInput>;
+  path?: InputMaybe<StringFilterInput>;
+  pathId?: InputMaybe<IntFilterInput>;
+  sitemap_exclude?: InputMaybe<BooleanFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+type UploadFolderInput = {
+  children?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  files?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  name?: InputMaybe<Scalars['String']>;
+  parent?: InputMaybe<Scalars['ID']>;
+  path?: InputMaybe<Scalars['String']>;
+  pathId?: InputMaybe<Scalars['Int']>;
+  sitemap_exclude?: InputMaybe<Scalars['Boolean']>;
+};
+
+type UploadFolderRelationResponseCollection = {
+  data: Array<UploadFolderEntity>;
 };
 
 type UsersPermissionsCreateRolePayload = {
@@ -1581,7 +1924,7 @@ type HomeFragment = { id: string, pathname: string, section1?: { id: string, tit
 
 type PostFragment = { slug?: string | null, name: string, teaser?: string | null, content?: string | null, cover?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null };
 
-type ServiceFragment = { name: string, slug: string, content?: string | null, locale?: string | null, localizations?: { data: Array<{ id?: string | null, attributes?: { content?: string | null, locale?: string | null, name: string } | null }> } | null, cover?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null };
+type ServiceFragment = { name: string, slug: string, content?: string | null, locale?: string | null, localizations?: { data: Array<{ attributes?: { content?: string | null, locale?: string | null, name: string } | null }> } | null, cover?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null };
 
 type WebsiteFragment = { content?: Array<{ __typename: 'ComponentPageAbout', id: string, about?: string | null, pathname: string, quote?: string | null, photo?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null, diplomas?: Array<{ id: string, title?: string | null, subtitle?: string | null, description?: string | null, media?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null } | null> | null, education?: { id: string, key?: string | null, value: string } | null } | { __typename: 'ComponentPageContactUs', id: string, pathname: string, contact?: { id: string, phone?: string | null, email?: string | null, address?: string | null } | null } | { __typename: 'ComponentPageHome', id: string, pathname: string, section1?: { id: string, title?: string | null, subtitle?: string | null, description?: string | null, media?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null } | null, section2?: Array<{ id: string, title?: string | null, subtitle?: string | null } | null> | null, section3?: Array<{ id: string, title?: string | null, subtitle?: string | null, description?: string | null, media?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null } | null> | null, section4?: { id: string, title?: string | null, subtitle?: string | null } | null, section5?: Array<{ id: string, title?: string | null, subtitle?: string | null } | null> | null, section6?: { id: string, title?: string | null, subtitle?: string | null } | null } | { __typename: 'Error' } | null> | null };
 
@@ -1607,7 +1950,7 @@ type ServiceQueryVariables = Exact<{
 }>;
 
 
-type ServiceQuery = { service?: { data?: { id?: string | null, attributes?: { name: string, slug: string, content?: string | null, locale?: string | null, localizations?: { data: Array<{ id?: string | null, attributes?: { content?: string | null, locale?: string | null, name: string } | null }> } | null, cover?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null } | null } | null } | null };
+type ServiceQuery = { service?: { data?: { id?: string | null, attributes?: { name: string, slug: string, content?: string | null, locale?: string | null, localizations?: { data: Array<{ attributes?: { content?: string | null, locale?: string | null, name: string } | null }> } | null, cover?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null } | null } | null } | null };
 
 type ServicesQueryVariables = Exact<{
   locale?: InputMaybe<Scalars['I18NLocaleCode']>;
@@ -1616,14 +1959,14 @@ type ServicesQueryVariables = Exact<{
 }>;
 
 
-type ServicesQuery = { services?: { data: Array<{ id?: string | null, attributes?: { name: string, slug: string, content?: string | null, locale?: string | null, localizations?: { data: Array<{ id?: string | null, attributes?: { content?: string | null, locale?: string | null, name: string } | null }> } | null, cover?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null } | null }> } | null };
+type ServicesQuery = { services?: { data: Array<{ id?: string | null, attributes?: { name: string, slug: string, content?: string | null, locale?: string | null, localizations?: { data: Array<{ attributes?: { content?: string | null, locale?: string | null, name: string } | null }> } | null, cover?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null } | null }> } | null };
 
 type TranslationsQueryVariables = Exact<{
   locale?: InputMaybe<Scalars['I18NLocaleCode']>;
 }>;
 
 
-type TranslationsQuery = { translation?: { data?: { id?: string | null, attributes?: { entry: Array<{ id: string, key?: string | null, value: string } | null> } | null } | null } | null };
+type TranslationsQuery = { translation?: { data?: { id?: string | null, attributes?: { locale?: string | null, localizations?: { data: Array<{ attributes?: { locale?: string | null, entry: Array<{ id: string, key?: string | null, value: string } | null> } | null }> } | null, entry: Array<{ id: string, key?: string | null, value: string } | null> } | null } | null } | null };
 
 type WebsiteQueryVariables = Exact<{
   locale?: InputMaybe<Scalars['I18NLocaleCode']>;

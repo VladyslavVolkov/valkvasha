@@ -4,6 +4,105 @@ import * as Apollo from '@apollo/client';
 import * as ApolloReactComponents from '@apollo/client/react/components';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 const defaultOptions = {} as const;
+
+      export type PossibleTypesResultData = {
+  "possibleTypes": {
+    "FindSlugResponse": [
+      "PostEntityResponse",
+      "ServiceEntityResponse"
+    ],
+    "GenericMorph": [
+      "ComponentDataEntry",
+      "ComponentDataSet",
+      "ComponentPageAbout",
+      "ComponentPageContactUs",
+      "ComponentPageHome",
+      "ComponentSharedMetaSocial",
+      "ComponentSharedSeo",
+      "ComponentUiCard",
+      "ComponentUiContact",
+      "ComponentUiGrid",
+      "ComponentUiHeadline",
+      "ComponentUiLink",
+      "ComponentUiMenu",
+      "ComponentUiParagraph",
+      "ComponentUiSection",
+      "ComponentUiTab",
+      "ComponentUiText",
+      "Contact",
+      "EmailDesignerEmailTemplate",
+      "EntityNotesNote",
+      "I18NLocale",
+      "MenusMenu",
+      "MenusMenuItem",
+      "Post",
+      "Service",
+      "Translation",
+      "UploadFile",
+      "UploadFolder",
+      "UsersPermissionsPermission",
+      "UsersPermissionsRole",
+      "UsersPermissionsUser",
+      "Website"
+    ],
+    "WebsiteContentDynamicZone": [
+      "ComponentPageAbout",
+      "ComponentPageContactUs",
+      "ComponentPageHome",
+      "Error"
+    ]
+  }
+};
+      const result: PossibleTypesResultData = {
+  "possibleTypes": {
+    "FindSlugResponse": [
+      "PostEntityResponse",
+      "ServiceEntityResponse"
+    ],
+    "GenericMorph": [
+      "ComponentDataEntry",
+      "ComponentDataSet",
+      "ComponentPageAbout",
+      "ComponentPageContactUs",
+      "ComponentPageHome",
+      "ComponentSharedMetaSocial",
+      "ComponentSharedSeo",
+      "ComponentUiCard",
+      "ComponentUiContact",
+      "ComponentUiGrid",
+      "ComponentUiHeadline",
+      "ComponentUiLink",
+      "ComponentUiMenu",
+      "ComponentUiParagraph",
+      "ComponentUiSection",
+      "ComponentUiTab",
+      "ComponentUiText",
+      "Contact",
+      "EmailDesignerEmailTemplate",
+      "EntityNotesNote",
+      "I18NLocale",
+      "MenusMenu",
+      "MenusMenuItem",
+      "Post",
+      "Service",
+      "Translation",
+      "UploadFile",
+      "UploadFolder",
+      "UsersPermissionsPermission",
+      "UsersPermissionsRole",
+      "UsersPermissionsUser",
+      "Website"
+    ],
+    "WebsiteContentDynamicZone": [
+      "ComponentPageAbout",
+      "ComponentPageContactUs",
+      "ComponentPageHome",
+      "Error"
+    ]
+  }
+};
+      export default result;
+    
 export type CardFragment = { id: string, title?: string | null, subtitle?: string | null, description?: string | null, media?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null };
 
 export type EntryFragment = { id: string, key?: string | null, value: string };
@@ -30,7 +129,7 @@ export type HomeFragment = { id: string, pathname: string, section1?: { id: stri
 
 export type PostFragment = { slug?: string | null, name: string, teaser?: string | null, content?: string | null, cover?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null };
 
-export type ServiceFragment = { name: string, slug: string, content?: string | null, locale?: string | null, localizations?: { data: Array<{ id?: string | null, attributes?: { content?: string | null, locale?: string | null, name: string } | null }> } | null, cover?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null };
+export type ServiceFragment = { name: string, slug: string, content?: string | null, locale?: string | null, localizations?: { data: Array<{ attributes?: { content?: string | null, locale?: string | null, name: string } | null }> } | null, cover?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null };
 
 export type WebsiteFragment = { content?: Array<{ __typename: 'ComponentPageAbout', id: string, about?: string | null, pathname: string, quote?: string | null, photo?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null, diplomas?: Array<{ id: string, title?: string | null, subtitle?: string | null, description?: string | null, media?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null } | null> | null, education?: { id: string, key?: string | null, value: string } | null } | { __typename: 'ComponentPageContactUs', id: string, pathname: string, contact?: { id: string, phone?: string | null, email?: string | null, address?: string | null } | null } | { __typename: 'ComponentPageHome', id: string, pathname: string, section1?: { id: string, title?: string | null, subtitle?: string | null, description?: string | null, media?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null } | null, section2?: Array<{ id: string, title?: string | null, subtitle?: string | null } | null> | null, section3?: Array<{ id: string, title?: string | null, subtitle?: string | null, description?: string | null, media?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null } | null> | null, section4?: { id: string, title?: string | null, subtitle?: string | null } | null, section5?: Array<{ id: string, title?: string | null, subtitle?: string | null } | null> | null, section6?: { id: string, title?: string | null, subtitle?: string | null } | null } | { __typename: 'Error' } | null> | null };
 
@@ -56,7 +155,7 @@ export type ServiceQueryVariables = Exact<{
 }>;
 
 
-export type ServiceQuery = { service?: { data?: { id?: string | null, attributes?: { name: string, slug: string, content?: string | null, locale?: string | null, localizations?: { data: Array<{ id?: string | null, attributes?: { content?: string | null, locale?: string | null, name: string } | null }> } | null, cover?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null } | null } | null } | null };
+export type ServiceQuery = { service?: { data?: { id?: string | null, attributes?: { name: string, slug: string, content?: string | null, locale?: string | null, localizations?: { data: Array<{ attributes?: { content?: string | null, locale?: string | null, name: string } | null }> } | null, cover?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null } | null } | null } | null };
 
 export type ServicesQueryVariables = Exact<{
   locale?: InputMaybe<Scalars['I18NLocaleCode']>;
@@ -65,14 +164,14 @@ export type ServicesQueryVariables = Exact<{
 }>;
 
 
-export type ServicesQuery = { services?: { data: Array<{ id?: string | null, attributes?: { name: string, slug: string, content?: string | null, locale?: string | null, localizations?: { data: Array<{ id?: string | null, attributes?: { content?: string | null, locale?: string | null, name: string } | null }> } | null, cover?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null } | null }> } | null };
+export type ServicesQuery = { services?: { data: Array<{ id?: string | null, attributes?: { name: string, slug: string, content?: string | null, locale?: string | null, localizations?: { data: Array<{ attributes?: { content?: string | null, locale?: string | null, name: string } | null }> } | null, cover?: { data?: { id?: string | null, attributes?: { previewUrl?: string | null, url: string } | null } | null } | null } | null }> } | null };
 
 export type TranslationsQueryVariables = Exact<{
   locale?: InputMaybe<Scalars['I18NLocaleCode']>;
 }>;
 
 
-export type TranslationsQuery = { translation?: { data?: { id?: string | null, attributes?: { entry: Array<{ id: string, key?: string | null, value: string } | null> } | null } | null } | null };
+export type TranslationsQuery = { translation?: { data?: { id?: string | null, attributes?: { locale?: string | null, localizations?: { data: Array<{ attributes?: { locale?: string | null, entry: Array<{ id: string, key?: string | null, value: string } | null> } | null }> } | null, entry: Array<{ id: string, key?: string | null, value: string } | null> } | null } | null } | null };
 
 export type WebsiteQueryVariables = Exact<{
   locale?: InputMaybe<Scalars['I18NLocaleCode']>;
@@ -164,11 +263,11 @@ export const ServiceProps = gql`
   locale
   localizations {
     data {
-      id
       attributes {
         content
         locale
         name
+        locale
       }
     }
   }
@@ -460,11 +559,22 @@ export type ServicesQueryHookResult = ReturnType<typeof useServicesQuery>;
 export type ServicesLazyQueryHookResult = ReturnType<typeof useServicesLazyQuery>;
 export type ServicesQueryResult = Apollo.QueryResult<ServicesQuery, ServicesQueryVariables>;
 export const TranslationsDocument = gql`
-    query translations($locale: I18NLocaleCode = "ru") {
+    query translations($locale: I18NLocaleCode = "uk") {
   translation(locale: $locale) {
     data {
       id
       attributes {
+        localizations {
+          data {
+            attributes {
+              locale
+              entry(pagination: {limit: 100}) {
+                ...Entry
+              }
+            }
+          }
+        }
+        locale
         entry(pagination: {limit: 100}) {
           ...Entry
         }

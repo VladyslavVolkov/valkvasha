@@ -5,11 +5,11 @@ fragment Service on Service {
   locale
   localizations {
     data {
-      id
       attributes {
         content
         locale
         name
+        locale
       }
     }
   }

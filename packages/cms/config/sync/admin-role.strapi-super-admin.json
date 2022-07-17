@@ -5,145 +5,62 @@
   "permissions": [
     {
       "action": "plugin::content-manager.explorer.create",
-      "subject": "api::customer.customer",
-      "properties": {
-        "fields": [
-          "firstName",
-          "lastName",
-          "stripe.stripeId",
-          "stripe.payload",
-          "uuid"
-        ]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::customer.customer",
-      "properties": {},
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.read",
-      "subject": "api::customer.customer",
-      "properties": {
-        "fields": [
-          "firstName",
-          "lastName",
-          "stripe.stripeId",
-          "stripe.payload",
-          "uuid"
-        ]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.update",
-      "subject": "api::customer.customer",
-      "properties": {
-        "fields": [
-          "firstName",
-          "lastName",
-          "stripe.stripeId",
-          "stripe.payload",
-          "uuid"
-        ]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.create",
-      "subject": "api::order-line.order-line",
-      "properties": {
-        "fields": [
-          "quantity",
-          "product"
-        ]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::order-line.order-line",
-      "properties": {},
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.read",
-      "subject": "api::order-line.order-line",
-      "properties": {
-        "fields": [
-          "quantity",
-          "product"
-        ]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.update",
-      "subject": "api::order-line.order-line",
-      "properties": {
-        "fields": [
-          "quantity",
-          "product"
-        ]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.create",
-      "subject": "api::order.order",
-      "properties": {
-        "fields": [
-          "stripe.stripeId",
-          "stripe.payload",
-          "items",
-          "uuid"
-        ]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::order.order",
-      "properties": {},
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.read",
-      "subject": "api::order.order",
-      "properties": {
-        "fields": [
-          "stripe.stripeId",
-          "stripe.payload",
-          "items",
-          "uuid"
-        ]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.update",
-      "subject": "api::order.order",
-      "properties": {
-        "fields": [
-          "stripe.stripeId",
-          "stripe.payload",
-          "items",
-          "uuid"
-        ]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.create",
-      "subject": "api::product.product",
+      "subject": "api::contact.contact",
       "properties": {
         "fields": [
           "name",
-          "stripe.stripeId",
-          "stripe.payload",
-          "uuid",
+          "email",
+          "subject",
+          "text",
+          "status"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::contact.contact",
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.read",
+      "subject": "api::contact.contact",
+      "properties": {
+        "fields": [
+          "name",
+          "email",
+          "subject",
+          "text",
+          "status"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "subject": "api::contact.contact",
+      "properties": {
+        "fields": [
+          "name",
+          "email",
+          "subject",
+          "text",
+          "status"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.create",
+      "subject": "api::post.post",
+      "properties": {
+        "fields": [
+          "name",
+          "slug",
+          "teaser",
+          "content",
+          "cover",
           "seo.metaTitle",
           "seo.metaDescription",
           "seo.metaImage",
@@ -156,31 +73,46 @@
           "seo.structuredData",
           "seo.metaViewport",
           "seo.canonicalURL"
+        ],
+        "locales": [
+          "ru",
+          "uk"
         ]
       },
       "conditions": []
     },
     {
       "action": "plugin::content-manager.explorer.delete",
-      "subject": "api::product.product",
-      "properties": {},
+      "subject": "api::post.post",
+      "properties": {
+        "locales": [
+          "ru",
+          "uk"
+        ]
+      },
       "conditions": []
     },
     {
       "action": "plugin::content-manager.explorer.publish",
-      "subject": "api::product.product",
-      "properties": {},
+      "subject": "api::post.post",
+      "properties": {
+        "locales": [
+          "ru",
+          "uk"
+        ]
+      },
       "conditions": []
     },
     {
       "action": "plugin::content-manager.explorer.read",
-      "subject": "api::product.product",
+      "subject": "api::post.post",
       "properties": {
         "fields": [
           "name",
-          "stripe.stripeId",
-          "stripe.payload",
-          "uuid",
+          "slug",
+          "teaser",
+          "content",
+          "cover",
           "seo.metaTitle",
           "seo.metaDescription",
           "seo.metaImage",
@@ -193,19 +125,24 @@
           "seo.structuredData",
           "seo.metaViewport",
           "seo.canonicalURL"
+        ],
+        "locales": [
+          "ru",
+          "uk"
         ]
       },
       "conditions": []
     },
     {
       "action": "plugin::content-manager.explorer.update",
-      "subject": "api::product.product",
+      "subject": "api::post.post",
       "properties": {
         "fields": [
           "name",
-          "stripe.stripeId",
-          "stripe.payload",
-          "uuid",
+          "slug",
+          "teaser",
+          "content",
+          "cover",
           "seo.metaTitle",
           "seo.metaDescription",
           "seo.metaImage",
@@ -218,6 +155,150 @@
           "seo.structuredData",
           "seo.metaViewport",
           "seo.canonicalURL"
+        ],
+        "locales": [
+          "ru",
+          "uk"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.create",
+      "subject": "api::service.service",
+      "properties": {
+        "fields": [
+          "name",
+          "slug",
+          "content",
+          "cover"
+        ],
+        "locales": [
+          "ru",
+          "uk"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::service.service",
+      "properties": {
+        "locales": [
+          "ru",
+          "uk"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.publish",
+      "subject": "api::service.service",
+      "properties": {
+        "locales": [
+          "ru",
+          "uk"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.read",
+      "subject": "api::service.service",
+      "properties": {
+        "fields": [
+          "name",
+          "slug",
+          "content",
+          "cover"
+        ],
+        "locales": [
+          "ru",
+          "uk"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "subject": "api::service.service",
+      "properties": {
+        "fields": [
+          "name",
+          "slug",
+          "content",
+          "cover"
+        ],
+        "locales": [
+          "ru",
+          "uk"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.create",
+      "subject": "api::translation.translation",
+      "properties": {
+        "fields": [
+          "entry.key",
+          "entry.value"
+        ],
+        "locales": [
+          "ru",
+          "uk"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.delete",
+      "subject": "api::translation.translation",
+      "properties": {
+        "locales": [
+          "ru",
+          "uk"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.publish",
+      "subject": "api::translation.translation",
+      "properties": {
+        "locales": [
+          "ru",
+          "uk"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.read",
+      "subject": "api::translation.translation",
+      "properties": {
+        "fields": [
+          "entry.key",
+          "entry.value"
+        ],
+        "locales": [
+          "ru",
+          "uk"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "subject": "api::translation.translation",
+      "properties": {
+        "fields": [
+          "entry.key",
+          "entry.value"
+        ],
+        "locales": [
+          "ru",
+          "uk"
         ]
       },
       "conditions": []
@@ -242,7 +323,8 @@
           "seo.canonicalURL"
         ],
         "locales": [
-          "en"
+          "ru",
+          "uk"
         ]
       },
       "conditions": []
@@ -252,7 +334,8 @@
       "subject": "api::website.website",
       "properties": {
         "locales": [
-          "en"
+          "ru",
+          "uk"
         ]
       },
       "conditions": []
@@ -277,7 +360,8 @@
           "seo.canonicalURL"
         ],
         "locales": [
-          "en"
+          "ru",
+          "uk"
         ]
       },
       "conditions": []
@@ -302,7 +386,8 @@
           "seo.canonicalURL"
         ],
         "locales": [
-          "en"
+          "ru",
+          "uk"
         ]
       },
       "conditions": []
@@ -345,6 +430,18 @@
     },
     {
       "action": "admin::marketplace.read",
+      "subject": null,
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "admin::project-settings.read",
+      "subject": null,
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "admin::project-settings.update",
       "subject": null,
       "properties": {},
       "conditions": []
@@ -447,51 +544,6 @@
     },
     {
       "action": "plugin::content-manager.explorer.create",
-      "subject": "plugin::graphs-builder.graph",
-      "properties": {
-        "fields": [
-          "title",
-          "type",
-          "collectionX",
-          "collectionXAttribute"
-        ]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "subject": "plugin::graphs-builder.graph",
-      "properties": {},
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.read",
-      "subject": "plugin::graphs-builder.graph",
-      "properties": {
-        "fields": [
-          "title",
-          "type",
-          "collectionX",
-          "collectionXAttribute"
-        ]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.update",
-      "subject": "plugin::graphs-builder.graph",
-      "properties": {
-        "fields": [
-          "title",
-          "type",
-          "collectionX",
-          "collectionXAttribute"
-        ]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.create",
       "subject": "plugin::users-permissions.user",
       "properties": {
         "fields": [
@@ -503,8 +555,7 @@
           "confirmationToken",
           "confirmed",
           "blocked",
-          "role",
-          "customer"
+          "role"
         ]
       },
       "conditions": []
@@ -528,8 +579,7 @@
           "confirmationToken",
           "confirmed",
           "blocked",
-          "role",
-          "customer"
+          "role"
         ]
       },
       "conditions": []
@@ -547,8 +597,7 @@
           "confirmationToken",
           "confirmed",
           "blocked",
-          "role",
-          "customer"
+          "role"
         ]
       },
       "conditions": []

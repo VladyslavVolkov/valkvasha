@@ -5,10 +5,11 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useApp } from 'src/components/app'
 import { Content } from 'src/components/layout'
 import { Page } from 'src/components/page'
-import { ServiceComponent, ServicesComponent, useServicesQuery } from 'src/graphql'
+import { useLocale } from '../../components/app/I18n'
+import { ServicesComponent, useServicesQuery } from '../../graphql'
 
 const Service: FC = () => {
-  const { i18n } = useApp()
+  const { isDefault } = useLocale()
   const { slug } = useParams()
   const navigate = useNavigate()
 
@@ -16,10 +17,9 @@ const Service: FC = () => {
     <Page>
       <ServicesComponent>
         {({ data, loading }) => {
-          const service =
-            i18n?.locale === 'ru'
-              ? data?.services?.data?.find(it => it?.attributes?.slug === slug)?.attributes
-              : data?.services?.data?.find(it => it?.attributes?.slug === slug)?.attributes?.localizations?.data?.[0].attributes
+          const service = isDefault
+            ? data?.services?.data?.find(it => it?.attributes?.slug === slug)?.attributes
+            : data?.services?.data?.find(it => it?.attributes?.slug === slug)?.attributes?.localizations?.data?.[0].attributes
           return service ? (
             <Content centered={false}>
               {service.content && <Markdown>{service?.content}</Markdown>}
@@ -28,7 +28,7 @@ const Service: FC = () => {
                 split={false}
                 loading={loading}
                 size={'large'}
-                grid={{ column: 5, xs: 1, sm: 1, md: 2, lg: 2, xl: 5 }}
+                grid={{ column: 5, xs: 1, sm: 2, md: 2, lg: 2, xl: 5, xxl: 5 }}
                 itemLayout={'horizontal'}
                 dataSource={data?.services?.data?.filter(it => it?.attributes?.slug !== slug) ?? []}
                 renderItem={it => (

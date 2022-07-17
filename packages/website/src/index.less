@@ -1,9 +1,10 @@
-@import (reference) 'antd/lib/style/themes/default';
+@import (once) 'antd/lib/style/default';
 
 @primary-color: #6f51c7;
 @text-color: #262523;
 @component-color: @text-color;
-@layout-body-background: #f9f9f9;
+@body-background: #ffffff;
+@layout-body-background: @body-background;
 @layout-footer-height: 156px;
 @headings-font-family: 'Nunito Sans', serif;
 @text-font-family: 'Open Sans', serif;
@@ -14,5 +15,5 @@
 @layout-header-padding: 16px 24px;
 @menu-bg: @layout-header-background;
 @layout-width: 1440px;
+@border-radius-base: 4px;
 @line-height-base: 2;
-@heading-1-size: ceil(@font-size-base * 2.3);

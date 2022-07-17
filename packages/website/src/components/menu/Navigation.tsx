@@ -1,42 +1,33 @@
-import { UnorderedListOutlined } from '@ant-design/icons'
-import { FC, VFC } from 'react'
-import { Alert, Button, Col, Layout, Menu, MenuProps, Row, Typography } from 'antd'
-import { useIntl } from 'react-intl'
-import { Link, NavLink, useLocation } from 'react-router-dom'
 import './Navigation.less'
-import { useApp } from 'src/components/app'
+
+import { Alert, Button, Col, Menu, MenuProps, Row, Typography } from 'antd'
+import { FC } from 'react'
+import { useIntl } from 'react-intl'
+import { useLocation, useNavigate } from 'react-router-dom'
+
+import { useLocale } from '../app/I18n'
 
 type NavigationProps = { data: LinkFragment[] } & MenuProps
 
 const TopMenu: FC<NavigationProps> = ({ data, ...props }) => {
   const { pathname } = useLocation()
   const { formatMessage } = useIntl()
-  const {
-    i18n: { locale, setLocale },
-  } = useApp()
+  const navigate = useNavigate()
+  const { locale, setLocale } = useLocale()
 
   const text = formatMessage({ id: 'pay.banner' }).split('\n')
 
   return (
-    <Row justify={'space-between'}>
+    <Row>
       <Col span={24}>
-        <Row>
-          <Col span={23}>
-            <Menu theme={'light'} mode={'horizontal'} {...props}>
-              {data?.map(
-                it =>
-                  it?.url && (
-                    <Menu.Item key={it?.url}>
-                      <NavLink to={it.url}>{it.title}</NavLink>
-                    </Menu.Item>
-                  ),
-              )}
-            </Menu>
+        <Row gutter={24} justify={'space-between'} align={'middle'}>
+          <Col flex={'auto'}>
+            <Menu theme={'light'} mode={'horizontal'} items={data?.map(it => ({ label: it.title, key: it.url, onClick: () => navigate(it.url) }))} {...props} />
           </Col>
-          <Col span={1}>
-            <Link to={'#'} type={'ghost'} onClick={() => setLocale(locale === 'ru' ? 'uk' : 'ru')}>
+          <Col flex={'80px'}>
+            <Button type={'link'} size={'small'} onClick={() => setLocale(locale === 'ru' ? 'uk' : 'ru')}>
               {locale === 'ru' ? 'Укр' : 'Рус'}
-            </Link>
+            </Button>
           </Col>
         </Row>
       </Col>
@@ -48,7 +39,7 @@ const TopMenu: FC<NavigationProps> = ({ data, ...props }) => {
             message={text[0]}
             description={<Typography.Text>{text[1]}</Typography.Text>}
             action={
-              <Button style={{ marginTop: 8 }} type={'primary'} href={'/pay'}>
+              <Button style={{ marginTop: 8 }} type={'primary'} href={'/support'}>
                 {formatMessage({ id: 'pay.button' })}
               </Button>
             }

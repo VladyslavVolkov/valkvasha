@@ -7,7 +7,7 @@ config:
     Upload: unknown
     Date: String
     Time: String
-    JSON: Record<string, Record<string|unknown>|Array|String|Number|Boolean|null|undefined>
+    JSON: Record<string, any>|any[]|string|number|boolean|null|undefined
     Long: Number
     DateTime: Date
 generates:
@@ -16,6 +16,9 @@ generates:
       skipTypename: true
       dedupeFragments: true
     plugins:
+      - fragment-matcher:
+          useExplicitTyping: true
+          apolloClientVersion: 3
       - typescript-operations:
           preResolveTypes: true
       - typescript-react-apollo:

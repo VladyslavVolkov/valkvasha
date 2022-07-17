@@ -1,13 +1,17 @@
 import { printSchema } from 'graphql'
 
-function generateGraphqlSchema(strapi) {
-  const schema = strapi.plugin('graphql').service('content-api').buildSchema()
+function generateGraphqlSchema(strapi: Strapi.Strapi) {
+  const schema = getContentApiService(strapi).buildSchema()
   strapi.fs.writeAppFile('./src/graphql/schema.graphqls', printSchema(schema))
   strapi.log.info('[GraphQL] Schema generated')
 }
 
-function getExtensionService(strapi) {
-  return strapi.plugin('graphql').service('extension')
+function getContentApiService(strapi: Strapi.Strapi) {
+  return strapi.service<Strapi.Graphql.ContentApiService>('plugin::graphql.content-api')
+}
+
+function getExtensionService(strapi: Strapi.Strapi) {
+  return strapi.service<Strapi.Graphql.ExtensionService>('plugin::graphql.extension')
 }
 
 function getSchemaExtension() {
